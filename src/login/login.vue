@@ -20,6 +20,7 @@
   </div>
 </template>
 <script>
+import moment from 'moment'
 export default {
   data() {
     const ids = this.$route.query.id
@@ -79,7 +80,8 @@ export default {
       console.log("r===",r)
       if(r.message === 'success') {
         this.$Message.success("登录成功")
-        this.toWhere('/menu/index/classes', r.rows[0].username)
+        sessionStorage.setItem('accessToken' , moment().format("YYYY-MM-DD hh:mm:ss"))
+        this.toWhere('/menu/index/class', r.rows[0].username)
       }
       if(r.message === 'failed') {
         this.$Message.error("登录失败")

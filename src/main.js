@@ -25,11 +25,29 @@ const routeConfig = {
 const router = new VueRouter(routeConfig)
 // 每次路由跳转到的时候都会调用该函数
 router.beforeEach((to, from, next) => { //beforeEach是router的钩子函数，在进入路由前执行
-  console.log('路由初始化')
+  // to即将进入的目标路由对象， from当前导航正要离开的路由，next下一步执行的函数钩子
+
   /* 路由发生变化修改页面title */
   if (to.meta.title) {
     document.title = to.meta.title
   }
+  console.log("sessionStorage.getItem('accessToken')=", sessionStorage.getItem('accessToken'))
+  // frame组件页面 所以直接让它跳到登录页
+  if(to.path === "/menu/index"){
+    next({ path: '/login' })
+  }
+  // 如果不是登录页
+  if(to.path !== "/login"){
+    // 验证自定义页面权限 和 是否有登录的session信息
+    // 没通过 跳到登录页面
+    if(to.meta.requiresAuth && !sessionStorage.getItem('accessToken')) {
+      next({ path: '/login' })
+    } else {
+      next()
+    }
+  }
+
+  // 登录页放行
   next()
 })
 axios.all('*', function (req, res, next) {

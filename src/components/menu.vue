@@ -46,7 +46,7 @@
                         <Icon type="ios-navigate"></Icon>
                         课程管理
                     </template>
-                    <MenuItem name="menu/index/classes">课程项目</MenuItem>
+                    <MenuItem name="menu/index/class">课程项目</MenuItem>
                     <MenuItem name="1-2">Option 2</MenuItem>
                     <MenuItem name="1-3">Option 3</MenuItem>
                 </Submenu>

@@ -15,11 +15,25 @@ export default {
   },
   components: {},
   created(){
+    const msg = this.$Message.loading({
+      content: '页面不存在！3秒后即将进入登录页',
+      duration: 3000
+    })
+    setTimeout(msg, 3000);
+ 
+    setTimeout(() => {
+      this.$router.push("/login")
+    }, 3000)
+    // const msg = this.$Message.loading({
+    //   content: '页面不存在！即将进入登录页',
+    //   duration: 3000
+    // });
+    // setTimeout(msg, 3000)
   },
   methods: {
     // routeTo(path,id) {
     //         this.$router.push({ path, query: { id } })
-    // }  
+    // }
   }
 }
 </script>

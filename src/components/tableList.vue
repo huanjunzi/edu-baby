@@ -6,7 +6,7 @@
         </div>
 
       <Table ref="table" :loading="loading" :columns="columns2" :data="historyData" :height='height'></Table>
-      <Button type="primary" :loading="loadingButton" @click="toLoading" style="margin:11px 0px 0px 483px;">刷新表格
+      <Button type="primary" @click="toLoading" style="margin:11px 0px 0px 483px;">刷新表格
       </Button>
       <Page v-if="pagingOption.showPaging" :total="dataCount" :page-size="pageSize" :current="pageNum" show-elevator show-sizer show-total class="paging" @on-change="changepage" @on-page-size-change="handlePageSize"></Page>
     </div>
