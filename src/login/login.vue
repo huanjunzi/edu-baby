@@ -80,6 +80,7 @@ export default {
       console.log("r===",r)
       if(r.message === 'success') {
         this.$Message.success("登录成功")
+        // 登录成功存储登录的session信息
         sessionStorage.setItem('accessToken' , moment().format("YYYY-MM-DD hh:mm:ss"))
         this.toWhere('/menu/index/class', r.rows[0].username)
       }

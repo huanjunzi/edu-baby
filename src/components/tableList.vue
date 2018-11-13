@@ -143,7 +143,7 @@
                 this.reload()
             },
             async handleListApproveHistory() {
-                console.log('调用', this.filterMap, this.params, this.timeRange)
+                // console.log('调用', this.filterMap, this.params, this.timeRange)
                 let r = await this.pageSend('get',this.url, 0, 0)
                 this.dataCount = r.rows ? r.rows.length : 0
                 this.historyData = r.rows ? r.rows.slice(0, this.pageSize) : []
@@ -153,7 +153,8 @@
                 var _start = ( index - 1 ) * this.pageSize;
                 var _end = this.pageSize;
                 let r = await this.pageSend('get', this.url, _start, _end)
-                this.historyData = r.rows;
+                this.historyData = r.rows ? r.rows.slice(0, this.pageSize) : []
+
                 // this.dataCount = r.rows ? r.rows.length : 0
                 },
             async handlePageSize(index){
@@ -163,6 +164,7 @@
                 let r = await this.pageSend('get', this.url, _start, _end)
                 this.historyData = r.rows;
                 this.dataCount = r.rows ? r.rows.length : 0
+                this.historyData = r.rows ? r.rows.slice(0, this.pageSize) : []
             },
             filterRemote: function(selected, field) {
                 console.log('selected=', selected, 'field=', field)
@@ -177,7 +179,6 @@
             // 时间筛选事件
             async changeTime (datatime) {
                 this.timeRange = datatime
-                console.log('this.timeRange', this.timeRange)
                 this.handleListApproveHistory()
             },
             exportData () {
