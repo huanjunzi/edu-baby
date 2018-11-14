@@ -104,7 +104,8 @@
         computed: {
             columns2() {
                 const cloumns = this.cols.map(c => _.extend({align: 'center'}, c, {
-                    render: c.renderText && ((h, ctx) => h('span', c.renderText(ctx.row))) ||c.mapper && ((h, ctx) => h('span', c.mapper[ctx.row[c.key]] || ctx.row[c.key])),
+                    render: c.renderText && ((h, ctx) => h('span', c.renderText(ctx.row))) ||
+                    c.mapper && ((h, ctx) => h('span', c.mapper[ctx.row[c.key]] || ctx.row[c.key])) || c.render,
                     filterRemote: this.filterRemote,
                     // 将filters复写为mappers 调用需要用mappers: {1:1}的形式
                     filters: c.mappers && _.pairs(c.mappers).map(e => ({value: e[0], label: e[1]})),
