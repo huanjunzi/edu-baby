@@ -47,15 +47,13 @@
                         课程管理
                     </template>
                     <MenuItem name="menu/index/class">课程项目</MenuItem>
-                    <MenuItem name="1-2">Option 2</MenuItem>
-                    <MenuItem name="1-3">Option 3</MenuItem>
                 </Submenu>
-                <Submenu name="2">
+                <Submenu name="member">
                     <template slot="title">
                         <Icon type="ios-keypad"></Icon>
-                        Item 2
+                        会员管理
                     </template>
-                    <MenuItem name="2-1">Option 1</MenuItem>
+                    <MenuItem name="menu/index/member">会员管理</MenuItem>
                     <MenuItem name="2-2">Option 2</MenuItem>
                 </Submenu>
                 <Submenu name="3">
@@ -69,12 +67,11 @@
             </Menu>
         </Sider>
         <Layout :style="{marginLeft: '250px'}">
-            <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}">欢迎你{{name}}</Header>
+            <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}"><span>欢迎你{{name}}</span><a style="margin-left:15px" @click="logout()">退出登录</a></Header>
             <Content :style="{padding: '0 16px 16px'}">
                 <Breadcrumb :style="{margin: '16px 0'}">
-                    <BreadcrumbItem href='indexs'>Home</BreadcrumbItem>
-                    <BreadcrumbItem>Components</BreadcrumbItem>
-                    <BreadcrumbItem>Layout</BreadcrumbItem>
+                    <!-- <BreadcrumbItem href="">{{title}}</BreadcrumbItem> -->
+                    <BreadcrumbItem :href="`${item.path}`" v-for="(item,index) in brumblist" :key="index">{{item.meta.title}}</BreadcrumbItem>
                 </Breadcrumb>
                 <Card>
                     <div class="layout-content">
@@ -91,34 +88,55 @@
 import _ from 'underscore'
 export default {
   data() {
-     let name = this.$route.query.name
-     console.log('this.$route.query', this.$route.query)
+     let name = sessionStorage.getItem("username")
     return {
-      name,
-      currentPath: window.location.pathname,
+        title: '',  // 页面标题
+        brumblist: '', // 路由集合
+        name,
+        currentPath: window.location.pathname,
     }
   },
   computed: {
     pathDir() {
       const path = this.$route.path.slice(1).split('/')
-
-      console.log('2= this.$route.path.slice(1)', this.$route.path.slice(1))
-
       return this.$route.path.slice(1)
       // return path.length > 2 ? _.without(path, _.last(path)).join('/') : this.$route.path.slice(1)
     },
     pathDirArray() {
       let ps = this.currentPath.slice(1).split('/')
-      console.log('ps[0]',ps[0])
       return [ps[0]]
     },
   },
+    watch: {
+        $route () {
+            console.log("watch==")
+            this.getBreadcrumb()
+        },
+    },
+    created() {
+        this.getBreadcrumb()
+    },
   methods: {
     onSelect(path) {
       console.log("selected", path, this.$route.path)
       this.$router.push('/' + path)
       // this.currentPath = '/' + path
-  },
+    },
+    logout() {
+        this.$Message.info("注销成功")
+        // 清除所有session
+        sessionStorage.clear()
+        this.$router.push("/login")
+
+    },
+    getBreadcrumb () {
+        this.brumblist = this.$route.matched
+        this.$route.matched.forEach((item, index) => {
+          // 判断父级路由是否为空字符串或者meta是否为首页,直接复写路径到根目录
+          // 后面的就是判断路由和当前遍历的项目是否一致,是的话把标题的值给上
+          item.meta.title === '首页' ? item.path = '/menu/index/class' : this.$route.path === item.path ? this.title = item.meta.title : '';
+        })
+    }
   }
 }
 </script>

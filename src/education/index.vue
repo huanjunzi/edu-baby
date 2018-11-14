@@ -22,10 +22,8 @@ import classEdit from './classEdit'
 import * as utils from '../utils/utils'
 export default {
   data () {
-    let name = this.$route.query.name
     return {
       theme1: 'dark',
-      name,
       selectedItems: [],
       url: '/api/education/findClasses',
       downloadURL: '/api/education/downloadExcel',
@@ -33,7 +31,7 @@ export default {
         showPaging: true,
       },
       params: {
-        // 'class_type': [0,1,2]
+        deleted: ['0']
       },
       historyColumns: [
         {

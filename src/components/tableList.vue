@@ -64,7 +64,6 @@
             },
             downloadURL: {
                 type: String,
-                require: true
             },
             params: {
                 type: Object,
@@ -86,6 +85,11 @@
                     }
                 }
             },
+            // sql排序 默认按照id的降序
+            order: {
+                type: String,
+                default: "desc"
+            }
         },
         mounted(){
             // 使父组件可以触发自定义函数
@@ -100,6 +104,7 @@
         computed: {
             columns2() {
                 const cloumns = this.cols.map(c => _.extend({align: 'center'}, c, {
+                    render: c.renderText && ((h, ctx) => h('span', c.renderText(ctx.row))) ||c.mapper && ((h, ctx) => h('span', c.mapper[ctx.row[c.key]] || ctx.row[c.key])),
                     filterRemote: this.filterRemote,
                     // 将filters复写为mappers 调用需要用mappers: {1:1}的形式
                     filters: c.mappers && _.pairs(c.mappers).map(e => ({value: e[0], label: e[1]})),
@@ -133,7 +138,8 @@
                         params: this.params,
                         filter: this.filterMap,
                         search: this.searchParams && _.object(this.searchParams),
-                        timeRange: JSON.stringify(this.timeRange)
+                        timeRange: JSON.stringify(this.timeRange),
+                        order: " order by t1.id "+this.order
                     }
                 }).then(res => res.data).then(this.loading = false)
                 return r

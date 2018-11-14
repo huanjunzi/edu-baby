@@ -43,6 +43,17 @@ export default {
     }
   },
   component: {},
+  // 初始化监听Enter事件
+  created() {
+    // 这里一定要将this赋值给一个变量
+    var lett = this
+    document.onkeydown = (e) => {
+      var key = window.event.keyCode
+      if (key == 13) {
+        lett.handleSubmit()
+      }
+    }
+  },
   methods: {
   // 跳转页面
   async toWhere(path,name) {
@@ -62,7 +73,7 @@ export default {
   //       }
   //     return this.$Message.error("登录失败!用户名或密码不正确!")
   //   },
-    async handleSubmit (name){
+    async handleSubmit (){
       let valid = await this.$validForm(this.$refs.formValidate)
 
       if (!valid) {
@@ -82,7 +93,8 @@ export default {
         this.$Message.success("登录成功")
         // 登录成功存储登录的session信息
         sessionStorage.setItem('accessToken' , moment().format("YYYY-MM-DD hh:mm:ss"))
-        this.toWhere('/menu/index/class', r.rows[0].username)
+        sessionStorage.setItem("username", r.rows[0].username)
+        this.toWhere('/menu/index/class')
       }
       if(r.message === 'failed') {
         this.$Message.error("登录失败")
