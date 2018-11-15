@@ -1,3 +1,4 @@
+import _ from 'underscore'
 // 验证表单
 export function validForm(form) {
   return new Promise(res => {
@@ -5,6 +6,10 @@ export function validForm(form) {
   })
 }
 
+export function getMapFilters(map_) {
+  // console.log("map_", map_, "_.pairs(map_).map(ps => ({text: ps[0], value: ps[1]}))=",_.pairs(map_).map(ps => ({text: ps[0], value: ps[1]})))
+  return _.pairs(map_).map(ps => ({value: ps[0], text: ps[1]}))
+}
 // 删除操作 弹出提示框
 /**
  *

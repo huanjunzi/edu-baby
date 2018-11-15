@@ -11,7 +11,7 @@
     " type="primary" @click="deleteClass('1')" >批量删除
           </Button>
     </div>
-    <table-list ref="tableList" :height="500" :cols="historyColumns" :isCheckBox="true" :url="url" :pagingOption="pagingOption"  @on-selection-change="selectChange" :params="params" :timeShow="false" :downloadURL="downloadURL" /></table-list>
+    <table-list ref="tableList" :height="500" :cols="historyColumns" :isCheckBox="true" :url="url" :pagingOption="pagingOption"  @on-selection-change="selectChange" :params="params" :timeShow="false" :downloadURL="downloadURL"  /></table-list>
   </div>
 
 </template>
@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     routeTo(path) {
-            this.$router.push({ path })
+      this.$router.push({ path })
     },
     selectChange(selection) {
       this.selectedItems = []
@@ -105,7 +105,7 @@ export default {
       let data
       data = type === '0' ?  row : this.selectedItems
       let r = await showModal(classEdit, { data, type }, { title: title, width: 'default', styles: {top: '40px'} })
-      if(r){
+      if(r && r.message === "success"){
         // 清空选中框数据
         this.selectedItems = []
         this.$refs.tableList.handleListApproveHistory()
@@ -117,13 +117,11 @@ export default {
     async deleteClass(type, row) {
       let ids = []
       let title = "这些课程"
-      console.log("this.selectedItems=", this.selectedItems)
       if (type === '1') {
         if (!this.selectedItems.length) return this.$Message.error("请先选择项目")
         for(let element of this.selectedItems){
           ids.push({ id: element.id })
         }
-        console.log("ids=", ids)
       } else {
       ids = [{id : row.id}]
       title = row.class_name
@@ -137,10 +135,10 @@ export default {
           }  
         }).then(res => res.data)
         
-         if(r && r.message === "success") {
-           this.$refs.tableList.handleListApproveHistory()
-           this.$Message.success("删除成功")
-          }
+        if(r && r.message === "success") {
+          this.$refs.tableList.handleListApproveHistory()
+          this.$Message.success("删除成功")
+        }
       })
     }
   }

@@ -89,7 +89,10 @@
             order: {
                 type: String,
                 default: "desc"
-            }
+            },
+            formatRow: {
+                type: Function,
+            },
         },
         mounted(){
             // 使父组件可以触发自定义函数
@@ -142,36 +145,34 @@
                         timeRange: JSON.stringify(this.timeRange),
                         order: " order by t1.id "+this.order
                     }
-                }).then(res => res.data).then(this.loading = false)
-                return r
+                })
+                this.loading = false
+                this.historyData = this.formatRow ? r.data.rows.map(this.formatRow) : r.data.rows
+
+                return r.data
             },
             // 刷新整个页面
             toLoading(){
                 this.reload()
             },
-            async handleListApproveHistory() {
+            async handleListApproveHistory(index) {
                 // console.log('调用', this.filterMap, this.params, this.timeRange)
-                let r = await this.pageSend('get',this.url, 0, 0)
-                this.dataCount = r.rows ? r.rows.length : 0
-                this.historyData = r.rows ? r.rows.slice(0, this.pageSize) : []
+                let res = await this.pageSend('get',this.url, 0, 0)
+                this.historyData = this.historyData ? this.historyData.slice(0, this.pageSize) : []
+                this.dataCount = res.rows ? res.rows.length : 0
             },
-
             async changepage(index){
                 var _start = ( index - 1 ) * this.pageSize;
                 var _end = this.pageSize;
-                let r = await this.pageSend('get', this.url, _start, _end)
-                this.historyData = r.rows ? r.rows.slice(0, this.pageSize) : []
-
-                // this.dataCount = r.rows ? r.rows.length : 0
-                },
+                console.log("this.pageSize", this.pageSize)
+                let res = await this.pageSend('get', this.url, _start, _end)
+                // this.historyData = res.rows ? res.rows.slice(0, this.pageSize) : []
+            },
             async handlePageSize(index){
                 this.pageSize = index
                 let _start = (this.pageNum  - 1) * index;
                 let _end = this.pageNum  * index;
-                let r = await this.pageSend('get', this.url, _start, _end)
-                this.historyData = r.rows;
-                this.dataCount = r.rows ? r.rows.length : 0
-                this.historyData = r.rows ? r.rows.slice(0, this.pageSize) : []
+                let res = await this.pageSend('get', this.url, _start, _end)
             },
             filterRemote: function(selected, field) {
                 console.log('selected=', selected, 'field=', field)
