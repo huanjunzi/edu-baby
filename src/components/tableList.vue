@@ -147,7 +147,11 @@
                     }
                 })
                 this.loading = false
-                this.historyData = !_.isEmpty(this.formatRow) ? r.data.rows.map(this.formatRow) : r.data.rows
+                if(r.data.rows){
+                    this.historyData = this.formatRow ? r.data.rows.map(this.formatRow) : r.data.rows
+                } else {
+                    this.historyData = []
+                }
 
                 return r.data
             },

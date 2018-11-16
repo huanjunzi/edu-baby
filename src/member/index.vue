@@ -71,6 +71,7 @@ export default {
           <div>
             <a on-click={() => this.createCustorm(1, ctx.row)} style="margin-right:10px">编辑</a>
              {ctx.row.childs_count ? <poptip trigger="hover" content="孩子数量为零后即可删除" placement="top-end"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteMember(0, ctx.row)}>删除</a>}
+            <a on-click={() => this.routeTo('memberDetail',ctx.row.id)} style="margin-left:10px">查看</a>
           </div>
       }],
     }
@@ -105,8 +106,8 @@ export default {
         }
       })
     },
-    routeTo(path) {
-            this.$router.push({ path })
+    routeTo(path, id) {
+      this.$router.push({ path, query: { member_id: id } })
     },
     selectChange(selection) {
       this.selectedItems = []
