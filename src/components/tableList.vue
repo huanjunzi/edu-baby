@@ -147,7 +147,7 @@
                     }
                 })
                 this.loading = false
-                this.historyData = this.formatRow ? r.data.rows.map(this.formatRow) : r.data.rows
+                this.historyData = !_.isEmpty(this.formatRow) ? r.data.rows.map(this.formatRow) : r.data.rows
 
                 return r.data
             },
@@ -191,7 +191,7 @@
             },
             exportData () {
                 // 由于浏览器传参无法传对象 需要先转换成json字符串 数组则不受影响
-                window.location.href = `${this.downloadURL}?limit=0&offset=0&params=${JSON.stringify(this.params)}&filter=${JSON.stringify(this.filterMap)}&search=${this.searchParams && JSON.stringify(_.object(this.searchParams))}&timeRange=${JSON.stringify(this.timeRange)}`
+                window.location.href = `${this.downloadURL}?limit=0&offset=0&params=${JSON.stringify(this.params)}&filter=${JSON.stringify(this.filterMap)}&search=${this.searchParams && JSON.stringify(_.object(this.searchParams))}&timeRange=${JSON.stringify(this.timeRange)}&order= order by t1.id +${this.order}`
             },
         },
  

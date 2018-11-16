@@ -26,7 +26,7 @@ export default {
       theme1: 'dark',
       selectedItems: [],
       url: '/api/education/findClasses',
-      downloadURL: '/api/education/downloadExcel',
+      // downloadURL: '/api/education/downloadExcel',
       pagingOption: { 
         showPaging: true,
       },
@@ -37,7 +37,6 @@ export default {
         {
             title: '课程名称',
             key: 'class_name',
-            mappers: {'亲子课': '亲子课', '早教课': '早教课', '托班':'托班'}
         },
         {
             title: '课程费用',
