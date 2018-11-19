@@ -17,17 +17,16 @@ export const menu = [
   },
 ]
 
-export const loginUser = [
+export const loginUser = 
 {
   path: '/login',
   name: 'login',
   meta: {title: '登录页面'},
   component:() => import('../login/login.vue')
-},
-]
+}
 
 export const notFound = {
-  path: '/*',
+  path: '*',
   name: 'error-404',
   meta: {
       title: '404-页面不存在'
@@ -36,9 +35,8 @@ export const notFound = {
 }
 
 
-
 export const routers = [
-    ...loginUser,
+    loginUser,
     ...menu,
     notFound,
 ]

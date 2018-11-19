@@ -44,7 +44,7 @@
         </Col>
       </Row>
 
-      <Row class="title_left" v-for="(item, index) in childArr">
+      <Row class="title_left" v-for="(item, index) in childArr" :key="item,index">
         <Col span="6">
           <span> 孩子姓名:</span>
           <span class="space"> {{item.child_name}} </span>
