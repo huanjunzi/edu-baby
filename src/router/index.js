@@ -13,6 +13,7 @@ export const menu = [
       { path: 'class_create', meta: {title: '新建课程项目', requiresAuth: true }, name: 'class_create', component: resolve => require(['../education/classCreate.vue'], resolve) },
       { path: 'member', meta: {title: '会员管理', requiresAuth: true }, name: 'member', component: resolve => require(['../member/index.vue'], resolve) },
       { path: 'memberDetail', meta: {title: '会员详情', requiresAuth: true }, name: 'memberDetail', component: resolve => require(['../member/memberDetail.vue'], resolve)},
+      { path: 'child', meta: {title: '儿童管理', requiresAuth: true }, name: 'child', component: resolve => require(['../child/index.vue'], resolve) },
     ]
   },
 ]

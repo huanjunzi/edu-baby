@@ -2,7 +2,7 @@
   <div>
      <Row>
           <Col span="2">
-               <Button style="margin: 0px 0px 15px -10px" type="primary" @click="createCustorm(0)">新建客户</Button>
+               <Button style="margin: 0px 0px 15px -10px" type="primary" @click="createCustorm(0)">新建儿童</Button>
           </Col>
           <Col span="2">
                <Button style="margin: 0px 0px 15px 10px" type="primary" @click="deleteMember(1)">批量删除</Button>
@@ -14,15 +14,15 @@
 <script>
 import _ from 'underscore'
 import {showModal} from '../modals'
+import childEdit from './childEdit'
 import * as utils from '../utils/utils'
-import memberEdit from './memberEdit'
-import {member_type} from './index.js'
+import {child_type,sex_type} from './index.js'
 export default {
   data () {
     return {
       selectedItems: [],
-      url: '/api/member/findMember',
-      downloadURL: '/api/member/downloadMemberExcel',
+      url: '/api/member/findChild',
+      downloadURL: '/api/member/downloadChildExcel',
       
       pagingOption: { 
         showPaging: true,
@@ -30,43 +30,44 @@ export default {
       params: {
         deleted: ['0']
       },
-      historyColumns: [{
-        title: '家长姓名',
+      historyColumns: [
+      {
+        title: '儿童姓名',
+        key: 'child_name',
+        searchable: true,
+      },
+      {
+        title: '所属家长',
         key: 'name',
-        searchable: true,
       },
       {
-        title: '家长称呼',
-        key: 'parents',
-      },
-      {
-        title: '家长年纪',
-        key: 'age',
-      },
-      {
-        title: '手机号',
+        title: '家长电话',
         key: 'tel_phone',
-        searchable: true,
       },
       {
-        title: '客户类型',
-        key: 'customer_type',
-        mappers: member_type,
-        renderText: r =>  member_type[r.customer_type] || '-',
+        title: '儿童性别',
+        key: 'sex',
+        mappers: sex_type,
+        renderText: r =>  sex_type[r.sex] || '-',
       },
       {
-        title: '孩子数量',
-        key: 'childs_count'
+        title: '儿童年龄',
+        key: 'age',
+        sortable: true
       },
       {
-        title: '沟通次数',
-        align: 'center',
-        type: 'error',
-        key: "contact_count",          
-        render: (h, ctx) => 
-        <div>
-          <input-number value={+ctx.row.contact_count} editable={false} step={1} onOn-change={(val) => this.changeCount(ctx, val) }></input-number>
-        </div>
+        title: '儿童特点',
+        key: 'specialty',
+      },
+      {
+        title: '所报课程',
+        key: 'class_name',
+      },
+      {
+        title: '会员状态',
+        key: 'member_status',
+        mappers: child_type,
+        renderText: r =>  child_type[r.member_status] || '-',
       },
       {
         title: '创建时间',
@@ -81,7 +82,7 @@ export default {
           render: (h, ctx) => 
           <div>
             <a on-click={() => this.createCustorm(1, ctx.row)} style="margin-right:10px">编辑</a>
-             {ctx.row.childs_count ? <poptip trigger="hover" content="孩子数量为零后即可删除" placement="top-end"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteMember(0, ctx.row)}>删除</a>}
+             {+ctx.row.member_status === 1 ? <poptip trigger="hover" content="设为非会员后即可删除" placement="top-end"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteMember(0, ctx.row)}>删除</a>}
             <a on-click={() => this.routeTo('memberDetail',ctx.row.id)} style="margin-left:10px">查看</a>
           </div>
       }],
@@ -127,26 +128,14 @@ export default {
     },
     async createCustorm(type, row) {
        let title = type === 0 ? "新建客户" : "编辑客户"
-       let r = await showModal(memberEdit, { data: row, type: 1 }, { title, width: 'default', styles: {top: '40px'} })
+       let r = await showModal(childEdit, { data: row, type: 1 }, { title, width: 'default', styles: {top: '40px'} })
         if(r && r.message === "success") {
           this.$refs.tableList.handleListApproveHistory()
           this.$Message.success("保存成功")
         }
     },
     formatRow(row) {
-      // console.log("_checked=",_checked: _.contains([0], row.childs_count))
-      return {...row, _disabled: !_.contains([0], row.childs_count)}
-    },
-    async changeCount(ctx , val) {
-       let r = await this.$axios({
-          method: "post",
-          url: '/api/member/changeContactCount',
-          params: {
-              id: ctx.row.id,
-              count: val
-          }
-        }).then(res => res.data)
-      
+      return {...row, _disabled: _.contains([1], row.member_status)}
     }
   }
 }

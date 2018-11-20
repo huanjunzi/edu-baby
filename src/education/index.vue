@@ -11,7 +11,7 @@
     " type="primary" @click="deleteClass('1')" >批量删除
           </Button>
     </div>
-    <table-list ref="tableList" :height="500" :cols="historyColumns" :isCheckBox="true" :url="url" :pagingOption="pagingOption"  @on-selection-change="selectChange" :params="params" :timeShow="false" :downloadURL="downloadURL"  /></table-list>
+    <table-list ref="tableList" :height="500" :cols="historyColumns" :isCheckBox="true" :url="url" :pagingOption="pagingOption"  @on-selection-change="selectChange" :params="params" :timeShow="false"  /></table-list>
   </div>
 
 </template>

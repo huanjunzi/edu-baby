@@ -14,12 +14,40 @@
       <FormItem label="家长电话" prop="tel_phone">
         <Input v-model="form.tel_phone" placeholder="请输入家长电话"></Input>
       </FormItem>
+      <a @click="showMore">更多联系人</a>
+      <div v-if="showContact">
+        <FormItem label="家长姓名" prop="second_name">
+          <Input v-model="form.second_name" placeholder="请输入家长姓名"></Input>
+        </FormItem>
+        <FormItem label="家长称谓" prop="second_parents">
+          <Input v-model="form.second_parents" placeholder="请输入家长称谓"></Input>
+        </FormItem>
+        <FormItem label="家长年龄" prop="second_age">
+          <Input v-model="form.second_age" placeholder="请输入家长年龄"></Input>
+        </FormItem>
+        <FormItem label="家长电话" prop="second_tel_phone">
+          <Input v-model="form.second_tel_phone" placeholder="请输入家长电话"></Input>
+        </FormItem>
+      </div>
       <FormItem label="客户类型" prop="customer_type">
-        <Select v-model="form.customer_type" :clearable="true">
+        <Select v-model="form.customer_type">
           <Option v-for="option in memberOptions" :value="option.value" :key="option.value">
             {{ option.text }}
           </Option>
         </Select>
+      </FormItem>
+      <FormItem label="意向" prop="purpose">
+        <Input v-model="form.purpose" placeholder="请输入家长意向"></Input>
+      </FormItem>
+      <FormItem label="添加方式" prop="purpose">
+        <Select v-model="form.social_soft" :clearable="true">
+          <Option v-for="option in socialOptions" :value="option.value" :key="option.value">
+            {{ option.text }}
+          </Option>
+        </Select>
+      </FormItem>
+      <FormItem label="备注" prop="remark">
+        <Input v-model="form.remark" type="textarea" :autosize="{minRows: 3,maxRows: 6}" placeholder="请输入备注..." style=""></Input>
       </FormItem>
     </Form>
   </div>
@@ -27,31 +55,39 @@
 <script>
 import _ from 'underscore'
 import {getMapFilters} from '../utils/utils'
-import {member_type} from './index.js'
+import {member_type, social} from './index.js'
 export default {
   props: ['data', 'type'],
 
   data() {
-    // let form = JSON.parse(JSON.stringify(this.data))
     let form = {
       name: "",
       parents: "",
       age: "",
       tel_phone: "",
       customer_type: "",
+      second_name: "",
+      second_parents: "",
+      second_tel_phone: "",
+      second_age: "",
+      purpose: "",
+      social_soft: "",
+      remark: "",
     }
     if(this.data){
       form =  Object.assign(form, JSON.parse(JSON.stringify(this.data)))
     }
     return {
       memberOptions: getMapFilters(member_type),
+      socialOptions: getMapFilters(social),
       form,
-      imgUrl: '',
+      showContact: false,
       ruleValidate: {
         name: [{ required: true, message: '客户名字不能为空'}],
         parents: [{ required: true, message: '客户称谓不能为空'}],
         customer_type: [{ required: true, message: '客户类型未选择'}],
         tel_phone: [{required: true, message: '电话格式不正确', pattern: /^1\d{10}$/, }],
+        second_tel_phone: [{required: false, message: '电话格式不正确', pattern: /^1\d{10}$/, }],
       }
     }
   },
@@ -76,7 +112,9 @@ export default {
       console.log("r==", r)
       return close(r)
     },
-    
+    showMore(){
+      this.showContact = !this.showContact
+    }
     // 单个编辑和多个编辑的数据 统一成数组格式 到后台循环处理
     // dataEdit() {
     //   let dataList = []

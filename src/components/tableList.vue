@@ -168,7 +168,6 @@
             async changepage(index){
                 var _start = ( index - 1 ) * this.pageSize;
                 var _end = this.pageSize;
-                console.log("this.pageSize", this.pageSize)
                 let res = await this.pageSend('get', this.url, _start, _end)
                 // this.historyData = res.rows ? res.rows.slice(0, this.pageSize) : []
             },

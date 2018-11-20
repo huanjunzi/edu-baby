@@ -10,19 +10,27 @@
       </Row>
       <Row class="title_left">
           <Col span="2"><span > 客户姓名: </span></Col>
-          <Col span="8"><span > {{parentArr.name}} </span></Col>
+          <Col span="8"><span > {{ parentArr.name  || '--' }} </span></Col>
+          <Col span="2"><span > 客户姓名: </span></Col>
+          <Col span="8"><span > {{ parentArr.second_name  || '--' }} </span></Col>
       </Row>
       <Row class="title_left">
         <Col span="2"><span> 客户称谓:</span></Col>
-        <Col span="8"><span> {{parentArr.parents}} </span></Col>
+        <Col span="8"><span> {{ parentArr.parents  || '--' }} </span></Col>
+        <Col span="2"><span> 客户称谓:</span></Col>
+        <Col span="8"><span> {{ parentArr.second_parents  || '--' }} </span></Col>
       </Row>
        <Row class="title_left">
         <Col span="2"><span> 客户年龄:</span></Col>
-        <Col span="8"><span> {{parentArr.age}} </span></Col>
+        <Col span="8"><span> {{ parentArr.age  || '--' }} </span></Col>
+         <Col span="2"><span> 客户年龄:</span></Col>
+        <Col span="8"><span> {{ parentArr.second_age  || '--' }} </span></Col>
       </Row>
       <Row class="title_left">
         <Col span="2"><span> 客户号码:</span></Col>
-        <Col span="8"><span> {{parentArr.tel_phone}} </span></Col>
+        <Col span="8"><span> {{ parentArr.tel_phone  || '--' }} </span></Col>
+        <Col span="2"><span> 客户号码:</span></Col>
+        <Col span="8"><span> {{ parentArr.second_tel_phone  || '--' }}  </span></Col>
       </Row>
       <Row class="title_left">
         <Col span="2"><span> 客户类型:</span></Col>

@@ -40,7 +40,7 @@
             <div class="text">左侧菜单栏</div>
         </div>
           <!-- active-name 指的是根据MenuItem name激活的菜单项。 open-names 指的是根据Submenu name展开的菜单项-->
-            <Menu :active-name="pathDir" theme="dark" width="auto" :open-names="pathDirArray" :width="'250'" mode="vertical" @on-select="onSelect">
+            <Menu :active-name="pathDir" theme="dark" width="auto" :open-names="pathDirArray" :width="'250'" mode="vertical" @on-select="onSelect" ref="child">
                 <Submenu name="menu">
                     <template slot="title">
                         <Icon type="ios-navigate"></Icon>
@@ -54,7 +54,7 @@
                         会员管理
                     </template>
                     <MenuItem name="menu/index/member">会员管理</MenuItem>
-                    <MenuItem name="2-2">Option 2</MenuItem>
+                    <MenuItem name="menu/index/child">儿童管理</MenuItem>
                 </Submenu>
                 <Submenu name="3">
                     <template slot="title">
