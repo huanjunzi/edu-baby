@@ -82,6 +82,7 @@ export default {
         sex: [{ required: true, message: '儿童性别不能为空'}],
         member_id: [{ required: true, message: '所属家长不能为空'}],
         member_status: [{ required: true, message: '会员类型未选择'}],
+        birthday: [{ required: true, message: '儿童生日未选择'}],
       }
     }
   },

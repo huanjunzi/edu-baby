@@ -30,6 +30,7 @@ export default {
       params: {
         deleted: ['0']
       },
+      isEdit: true,
       historyColumns: [
       {
         title: '儿童姓名',
@@ -61,6 +62,15 @@ export default {
       {
         title: '所报课程',
         key: 'class_name',
+      },
+      {
+        title: '最终支付费用',
+        key: '',
+        width: 110,
+        render: (h, ctx) => 
+        <div>
+          <input-number id={"fee" + ctx.row.id} value={+ctx.row.final_fee} editable={this.isEdit} step={1000} onOn-change={(val) => this.changeCount(ctx, val, "fee") }></input-number>
+        </div>
       },
       {
         title: '会员状态',
@@ -135,6 +145,20 @@ export default {
     },
     formatRow(row) {
       return {...row, _disabled: _.contains([1], row.member_status)}
+    },
+    async changeCount(ctx , val, keyName) {
+      // 获取选中的节点
+      // let currentNode = document.getElementById(keyName + ctx.row.id)
+      // currentNode.style="background-color:red"
+      
+       let r = await this.$axios({
+          method: "post",
+          url: '/api/child/changeClassFee',
+          params: {
+              id: ctx.row.id,
+              count: val
+          }
+        }).then(res => res.data)
     }
   }
 }
