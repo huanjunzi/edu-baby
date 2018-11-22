@@ -5,7 +5,7 @@
                <Button style="margin: 0px 0px 15px -10px" type="primary" @click="createCustorm(0)">新建儿童</Button>
           </Col>
           <Col span="2">
-               <Button style="margin: 0px 0px 15px 10px" type="primary" @click="deleteMember(1)">批量删除</Button>
+               <Button style="margin: 0px 0px 15px 10px" type="primary" @click="deleteChild(1)">批量删除</Button>
           </Col>
       </Row>
       <table-list ref="tableList" :height="500" :cols="historyColumns" :url="url" :formatRow="formatRow" @on-selection-change="selectChange" :params="params" :downloadURL="downloadURL"></table-list>
@@ -21,8 +21,8 @@ export default {
   data () {
     return {
       selectedItems: [],
-      url: '/api/member/findChild',
-      downloadURL: '/api/member/downloadChildExcel',
+      url: '/api/child/findChild',
+      downloadURL: '/api/child/downloadChildExcel',
       
       pagingOption: { 
         showPaging: true,
@@ -38,7 +38,7 @@ export default {
       },
       {
         title: '所属家长',
-        key: 'name',
+        key: 'member_name',
       },
       {
         title: '家长电话',
@@ -52,8 +52,7 @@ export default {
       },
       {
         title: '儿童年龄',
-        key: 'age',
-        sortable: true
+        key: 'age'
       },
       {
         title: '儿童特点',
@@ -82,8 +81,8 @@ export default {
           render: (h, ctx) => 
           <div>
             <a on-click={() => this.createCustorm(1, ctx.row)} style="margin-right:10px">编辑</a>
-             {+ctx.row.member_status === 1 ? <poptip trigger="hover" content="设为非会员后即可删除" placement="top-end"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteMember(0, ctx.row)}>删除</a>}
-            <a on-click={() => this.routeTo('memberDetail',ctx.row.id)} style="margin-left:10px">查看</a>
+             {+ctx.row.member_status === 1 ? <poptip trigger="hover" content="设为非会员后即可删除" placement="top-end"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteChild(0, ctx.row)}>删除</a>}
+            <a on-click={() => this.routeTo('childDetail',ctx.row.id)} style="margin-left:10px">查看</a>
           </div>
       }],
     }
@@ -92,9 +91,9 @@ export default {
   async created(){
   },
   methods: {
-    deleteMember(type, row){
+    deleteChild(type, row){
       let ids = []
-      let title = "这些客户"
+      let title = "这些儿童"
       if (+type === 1) {
         if (!this.selectedItems.length) return this.$Message.error("请先选择项目")
         for(let element of this.selectedItems){
@@ -102,14 +101,14 @@ export default {
         }
       } else {
       ids = [{id : row.id}]
-      title = row.class_name
+      title = row.child_name
       }
       utils.deletedModal(this,title, async() => {
         let r = await this.$axios({
           method: "post",
-          url: '/api/member/deleteMember',
+          url: '/api/child/deleteChild',
           params: {
-              member_id: JSON.stringify(ids),
+              child_id: JSON.stringify(ids),
           }
         }).then(res => res.data)
         if(r && r.message === "success") {

@@ -131,21 +131,12 @@
         this.childArr = r.data.rows[0].childs
         this.parentArr = r.data.rows[1].parent[0]
       }
-   
-      //   if(r && r.message === "success") {
-      //     //ES6提供了Object.assign()，用于合并/复制对象的属性。浅拷贝标准写法（推荐）应用于双向绑定的场景 例如编辑 
-      //     this.formData = Object.assign(this.formData, r.rows[0])
-      //     // _.extend(this.formData, r.rows[0]) 等同于 Object.assign(this.formData, r.rows[0]（不推荐双向绑定的场景使用）
-      //     // _.extend(this.formData, r.rows[0])
-
-      
     },
     methods: {
  
       routeTo() {
-        this.$router.push({ path: 'member'})
+        this.$router.push({ path: 'child'})
       },
- 
     }
   }
 </script>

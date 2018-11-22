@@ -6,38 +6,38 @@
         <Input v-model="form.child_name" placeholder="请输入儿童姓名"></Input>
       </FormItem>
       <FormItem label="儿童性别" prop="sex">
-        <Select v-model="form.sex" :clearable="true">
+        <Select v-model="form.sex">
           <Option v-for="option in sexOptions" :value="option.value" :key="option.value">
             {{ option.text }}
           </Option>
       </Select>
       </FormItem>
       <FormItem label="儿童年龄" prop="age">
-          <Input v-model="form.age" placeholder="请输入儿童年龄"></Input>
+        <Input v-model="form.age" placeholder="请输入儿童年龄"></Input>
       </FormItem>
       <FormItem label="儿童特点" prop="specialty">
-        <Input v-model="form.tel_phone" placeholder="请输入儿童特点"></Input>
+        <Input v-model="form.specialty"  type="textarea" :autosize="{minRows: 3,maxRows: 6}" placeholder="请输入儿童特点"></Input>
       </FormItem>
       <FormItem label="儿童生日" prop="birthday">
         <br />
-        <DatePicker type="date" placeholder="请输入儿童生日" style="width: 200px"></DatePicker>
+        <DatePicker type="date" v-model="form.birthday" @on-change="changeTime" placeholder="请输入儿童生日" style="width: 200px"></DatePicker>
       </FormItem>
-      <FormItem label="所属家长" prop="parents">
-        <Select v-model="form.parents" :clearable="true">
-          <Option v-for="option in childOptions" :value="option.value" :key="option.value">
-            {{ option.text }}
+      <FormItem label="所属家长" prop="member_id">
+        <Select v-model="form.member_id">
+          <Option v-for="option in prarentsOptions" :value="option.id" :key="option.id">
+            {{ option.name }}
           </Option>
         </Select>
       </FormItem>
-      <FormItem label="会员课程" prop="class_info">
-        <Select v-model="form.class_info" :clearable="true">
-          <Option v-for="option in childOptions" :value="option.value" :key="option.value">
-            {{ option.text }}
+      <FormItem label="会员课程" prop="class_id">
+        <Select v-model="form.class_id" :clearable="true">
+          <Option v-for="option in classOptions" :value="option.id" :key="option.id">
+            {{ option.class_name }}
           </Option>
         </Select>
       </FormItem>
       <FormItem label="会员类型" prop="member_status">
-        <Select v-model="form.member_status" :clearable="true">
+        <Select v-model="form.member_status">
           <Option v-for="option in childOptions" :value="option.value" :key="option.value">
             {{ option.text }}
           </Option>
@@ -51,6 +51,7 @@
 import _ from 'underscore'
 import {getMapFilters} from '../utils/utils'
 import {child_type, sex_type} from './index.js'
+import { member_type } from '../member';
 export default {
   props: ['data', 'type'],
 
@@ -61,61 +62,74 @@ export default {
       age: "",
       specialty: "",
       birthday: "",
-      class_info: "",
-      final_fee: "",
+      class_id: "",
       member_status: "",
-      parents: "",
+      member_id: "",
     }
     if(this.data){
       form =  Object.assign(form, JSON.parse(JSON.stringify(this.data)))
+      // 这边member_status传过来是number类型 需要转换成string
+      form.member_status = form.member_status.toString()
     }
     return {
       childOptions: getMapFilters(child_type),
-      sexOptions: getMapFilters(sex_type), 
+      sexOptions: getMapFilters(sex_type),
+      prarentsOptions: [],
+      classOptions: [],
       form,
-      imgUrl: '',
       ruleValidate: {
-        name: [{ required: true, message: '客户名字不能为空'}],
-        parents: [{ required: true, message: '客户称谓不能为空'}],
-        customer_type: [{ required: true, message: '客户类型未选择'}],
+        child_name: [{ required: true, message: '儿童名字不能为空'}],
+        sex: [{ required: true, message: '儿童性别不能为空'}],
+        member_id: [{ required: true, message: '所属家长不能为空'}],
+        member_status: [{ required: true, message: '会员类型未选择'}],
       }
     }
   },
   created() {
+    this.findInfo()
   },
   methods: {
+    async findInfo() {
+      let member = await this.$axios({
+          method: "get",
+          url: '/api/member/findMember',
+          params: {
+              params: {
+                deleted: ['0']
+              }
+          }
+      }).then(res => res.data)
+      this.prarentsOptions = member.rows
+      let classes = await this.$axios({
+          method: "get",
+          url: '/api/education/findClasses',
+          params: {
+              params: {
+                deleted: ['0']
+              }
+          }
+      }).then(res => res.data)
+      this.classOptions = classes.rows
+    },
+    changeTime (datatime) {
+        this.form.birthday = datatime
+    },
     // 确定事件
     async onOk(close) {
+      console.log("this.form", this.form)
       let valid = await this.$validForm(this.$refs.form)
       if (!valid) {
         return this.$Message.error("表单验证失败")
       }
-      // 如果要传json数组 需要先将JS对象转成JSON字符串
-      // let dataFomart =JSON.stringify(await this.dataEdit())
       let r = await this.$axios({
           method: "post",
-          url: '/api/member/editMember',
+          url: '/api/child/editChild',
           params: {
               data: JSON.stringify([this.form]),
           }
       }).then(res => res.data)
-      console.log("r==", r)
       return close(r)
     },
-    
-    // 单个编辑和多个编辑的数据 统一成数组格式 到后台循环处理
-    // dataEdit() {
-    //   let dataList = []
-    //   if(this.type === '0') {
-    //     dataList = [this.form]
-    //   }
-    //   if(this.type === '1') {
-    //     for(let element of this.form){
-    //       dataList.push({ id: element.id })
-    //     }
-    //   }
-    //   return dataList
-    // }
   }
 }
 </script>

@@ -53,7 +53,7 @@
                         <Icon type="ios-keypad"></Icon>
                         会员管理
                     </template>
-                    <MenuItem name="menu/index/member">会员管理</MenuItem>
+                    <MenuItem name="menu/index/member">家长管理</MenuItem>
                     <MenuItem name="menu/index/child">儿童管理</MenuItem>
                 </Submenu>
                 <Submenu name="3">

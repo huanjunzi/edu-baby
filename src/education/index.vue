@@ -11,7 +11,7 @@
     " type="primary" @click="deleteClass('1')" >批量删除
           </Button>
     </div>
-    <table-list ref="tableList" :height="500" :cols="historyColumns" :isCheckBox="true" :url="url" :pagingOption="pagingOption"  @on-selection-change="selectChange" :params="params" :timeShow="false"  /></table-list>
+    <table-list ref="tableList" :height="500" :cols="historyColumns" :isCheckBox="true" :url="url" :pagingOption="pagingOption"  @on-selection-change="selectChange" :params="params" :timeShow="false"  :formatRow="formatRow" /></table-list>
   </div>
 
 </template>
@@ -37,11 +37,12 @@ export default {
         {
             title: '课程名称',
             key: 'class_name',
+            searchable: true,
         },
         {
             title: '课程费用',
             key: 'class_fee',
-            searchable: true,
+            sortable: true,
             // mappers: {'小于': '普通', '加急': '加急'}
             // filters: [
             //   {
@@ -76,7 +77,7 @@ export default {
             <div>
               <a on-click={() => this.createClass("class_create", ctx.row)} style="margin-right:10px">编辑</a>
               <a on-click={() => this.editClass('0', ctx.row)} style="margin-right:10px">编辑价格</a>
-              <a on-click={() => this.deleteClass(0, ctx.row)}>删除</a>
+              {ctx.row.count_class ? <poptip trigger="hover" content="该课程无人选择后即可删除" placement="top-end"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteClass(0, ctx.row)}>删除</a>}
             </div>
         }
       ],
@@ -104,7 +105,7 @@ export default {
       let data
       data = type === '0' ?  row : this.selectedItems
       let r = await showModal(classEdit, { data, type }, { title: title, width: 'default', styles: {top: '40px'} })
-      if(r && r.message === "success"){
+      if(r && r.data.message === "success"){
         // 清空选中框数据
         this.selectedItems = []
         this.$refs.tableList.handleListApproveHistory()
@@ -139,6 +140,9 @@ export default {
           this.$Message.success("删除成功")
         }
       })
+    },
+    formatRow(row) {
+      return {...row, _disabled: _.contains([1], row.count_class)}
     }
   }
 }

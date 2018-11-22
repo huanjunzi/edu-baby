@@ -56,13 +56,13 @@ export default {
       },
       {
         title: '孩子数量',
-        key: 'childs_count'
+        key: 'count_member',
       },
       {
         title: '沟通次数',
         align: 'center',
         type: 'error',
-        key: "contact_count",          
+        key: "",
         render: (h, ctx) => 
         <div>
           <input-number value={+ctx.row.contact_count} editable={false} step={1} onOn-change={(val) => this.changeCount(ctx, val) }></input-number>
@@ -81,7 +81,7 @@ export default {
           render: (h, ctx) => 
           <div>
             <a on-click={() => this.createCustorm(1, ctx.row)} style="margin-right:10px">编辑</a>
-             {ctx.row.childs_count ? <poptip trigger="hover" content="孩子数量为零后即可删除" placement="top-end"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteMember(0, ctx.row)}>删除</a>}
+             {ctx.row.count_member ? <poptip trigger="hover" content="孩子数量为零后即可删除" placement="top-end"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteMember(0, ctx.row)}>删除</a>}
             <a on-click={() => this.routeTo('memberDetail',ctx.row.id)} style="margin-left:10px">查看</a>
           </div>
       }],
@@ -126,7 +126,7 @@ export default {
       console.log('test',this.selectedItems)
     },
     async createCustorm(type, row) {
-       let title = type === 0 ? "新建客户" : "编辑客户"
+       let title = type === 0 ? "新建家长" : "编辑家长"
        let r = await showModal(memberEdit, { data: row, type: 1 }, { title, width: 'default', styles: {top: '40px'} })
         if(r && r.message === "success") {
           this.$refs.tableList.handleListApproveHistory()
@@ -134,8 +134,7 @@ export default {
         }
     },
     formatRow(row) {
-      // console.log("_checked=",_checked: _.contains([0], row.childs_count))
-      return {...row, _disabled: !_.contains([0], row.childs_count)}
+      return {...row, _disabled: !_.contains([0], row.count_member)}
     },
     async changeCount(ctx , val) {
        let r = await this.$axios({

@@ -30,7 +30,6 @@ router.beforeEach((to, from, next) => { //beforeEach是router的钩子函数，�
   if (to.meta.title) {
     document.title = to.meta.title
   }
-
   // console.log("sessionStorage.getItem('accessToken')=", sessionStorage.getItem('accessToken'))
   // frame组件页面 所以直接让它跳到登录页
   if(to.path === "/menu/index"){

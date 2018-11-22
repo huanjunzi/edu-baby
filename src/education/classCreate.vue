@@ -73,7 +73,7 @@
           this.formData = Object.assign(this.formData, r.rows[0])
           // _.extend(this.formData, r.rows[0]) 等同于 Object.assign(this.formData, r.rows[0]（不推荐双向绑定的场景使用）
           // _.extend(this.formData, r.rows[0])
-        } 
+        }
       }
    
       
@@ -96,9 +96,9 @@
 
         if (r && r.message === "success") {
          this.cancel()
-         return this.$Message.success("新增成功")
+         return this.$Message.success("操作成功")
         }
-        return this.$Message.error("新增失败")
+        return this.$Message.error("操作失败")
 
       },
       cancel() {
