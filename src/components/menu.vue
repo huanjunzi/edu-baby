@@ -116,7 +116,6 @@ export default {
     },
   methods: {
     onSelect(path) {
-      console.log("selected", path, this.$route.path)
       this.$router.push('/' + path)
     },
     logout() {
@@ -131,6 +130,8 @@ export default {
         this.$route.matched.forEach((item, index) => {
           // 判断父级路由是否为空字符串或者meta是否为首页,直接复写路径到根目录
           // 后面的就是判断路由和当前遍历的项目是否一致,是的话把标题的值给上
+                console.log("item",item)
+
           item.meta.title === '首页' ? item.path = '/menu/index/class' : this.$route.path === item.path ? this.title = item.meta.title : '';
         })
     }

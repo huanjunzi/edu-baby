@@ -80,6 +80,7 @@ export default {
       ruleValidate: {
         child_name: [{ required: true, message: '儿童名字不能为空'}],
         sex: [{ required: true, message: '儿童性别不能为空'}],
+        age: [{ required: true, message: '儿童年龄不能为空'}],
         member_id: [{ required: true, message: '所属家长不能为空'}],
         member_status: [{ required: true, message: '会员类型未选择'}],
         birthday: [{ required: true, message: '儿童生日未选择'}],
@@ -117,7 +118,6 @@ export default {
     },
     // 确定事件
     async onOk(close) {
-      console.log("this.form", this.form)
       let valid = await this.$validForm(this.$refs.form)
       if (!valid) {
         return this.$Message.error("表单验证失败")

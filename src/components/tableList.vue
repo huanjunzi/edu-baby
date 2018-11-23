@@ -2,7 +2,7 @@
     <div>
         <div v-if="timeShow" class="topButton" style=''>
             <DatePicker type="daterange" split-panels placeholder="请选择日期" style="width: 200px"  @on-change="changeTime"></DatePicker>
-            <Button type="primary" @click="exportData" style='margin-left: 10px'><Icon type="ios-download-outline"></Icon>导出原始数据</Button>
+            <Button type="primary" @click="exportData" style='margin-left: 10px'><Icon type="ios-download-outline"></Icon>导出表格数据</Button>
         </div>
 
       <Table ref="table" :loading="loading" :columns="columns2" :data="historyData" :height='height'></Table>
@@ -122,7 +122,6 @@
                     </div>
                     : c.renderHeader
                 }))
-                // console.log('cloumns===', cloumns)
                 return cloumns
             }
         },
@@ -160,7 +159,6 @@
                 this.reload()
             },
             async handleListApproveHistory(index) {
-                // console.log('调用', this.filterMap, this.params, this.timeRange)
                 let res = await this.pageSend('get',this.url, 0, 0)
                 this.historyData = this.historyData ? this.historyData.slice(0, this.pageSize) : []
                 this.dataCount = res.rows ? res.rows.length : 0
@@ -178,12 +176,10 @@
                 let res = await this.pageSend('get', this.url, _start, _end)
             },
             filterRemote: function(selected, field) {
-                console.log('selected=', selected, 'field=', field)
                 if (!selected.length) {
                     delete this.filterMap[field]
                 } else {
                     this.filterMap[field] = selected
-                    console.log('this.filterMap', this.filterMap, typeof this.filterMap)
                 }
                 this.handleListApproveHistory()
             },
@@ -205,6 +201,7 @@
                     type: 'selection',
                     width: 60,
                     align: 'center',
+                    fixed: 'left',
                 })
             }
             this.handleListApproveHistory()

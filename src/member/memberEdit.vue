@@ -109,7 +109,6 @@ export default {
               data: JSON.stringify([this.form]),
           }
       }).then(res => res.data)
-      console.log("r==", r)
       return close(r)
     },
     showMore(){

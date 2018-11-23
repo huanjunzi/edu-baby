@@ -69,7 +69,7 @@
         </Col>
         <Col span="3">
           <span> 孩子性别:</span>
-          <span class="space"> {{item.sex === "male" ? "男" : "女"}} </span>
+          <span class="space"> {{item.sex ? "男" : "女"}} </span>
         </Col>
         <Col span="6">
           <span> <a style="font-size:10px" @click="routeTo('childDetail', item.id)">查看详情</a></span>

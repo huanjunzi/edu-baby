@@ -35,33 +35,45 @@ export default {
       {
         title: '儿童姓名',
         key: 'child_name',
+        width: 120,
         searchable: true,
       },
       {
         title: '所属家长',
         key: 'member_name',
+        width: 120,
       },
       {
         title: '家长电话',
         key: 'tel_phone',
+        width: 120,
       },
       {
         title: '儿童性别',
         key: 'sex',
+        width: 100,
         mappers: sex_type,
         renderText: r =>  sex_type[r.sex] || '-',
       },
       {
         title: '儿童年龄',
-        key: 'age'
+        key: 'age',
+        width: 100,
+      },
+      {
+        title: '儿童生日',
+        key: 'birthday',
+        width: 100,
       },
       {
         title: '儿童特点',
         key: 'specialty',
+        width: 200,
       },
       {
         title: '所报课程',
         key: 'class_name',
+        width: 120,
       },
       {
         title: '最终支付费用',
@@ -69,18 +81,20 @@ export default {
         width: 110,
         render: (h, ctx) => 
         <div>
-          <input-number id={"fee" + ctx.row.id} value={+ctx.row.final_fee} editable={this.isEdit} step={1000} onOn-change={(val) => this.changeCount(ctx, val, "fee") }></input-number>
+          <input-number id={"fee" + ctx.row.id} value={+ctx.row.final_fee} editable={this.isEdit} min={0} step={1000} onOn-change={(val) => this.changeCount(ctx, val, "fee") }></input-number>
         </div>
       },
       {
         title: '会员状态',
         key: 'member_status',
+        width: 120,
         mappers: child_type,
         renderText: r =>  child_type[r.member_status] || '-',
       },
       {
         title: '创建时间',
         key: 'create_time',
+        width: 150,
         sortable: true
       },
       {
@@ -88,6 +102,7 @@ export default {
           align: 'center',
           type: 'error',
           width: 180,
+          fixed: 'right',
           render: (h, ctx) => 
           <div>
             <a on-click={() => this.createCustorm(1, ctx.row)} style="margin-right:10px">编辑</a>
@@ -133,7 +148,6 @@ export default {
     selectChange(selection) {
       this.selectedItems = []
       _.extend(this.selectedItems, selection)
-      console.log('test',this.selectedItems)
     },
     async createCustorm(type, row) {
        let title = type === 0 ? "新建儿童" : "编辑儿童"

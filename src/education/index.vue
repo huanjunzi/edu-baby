@@ -93,7 +93,6 @@ export default {
     selectChange(selection) {
       this.selectedItems = []
       _.extend(this.selectedItems, selection)
-      console.log('test',this.selectedItems)
     },
     // 0代表单个编辑 1代表批量编辑
     async editClass(type, row) {

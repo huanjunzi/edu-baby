@@ -33,50 +33,59 @@ export default {
       historyColumns: [{
         title: '家长姓名',
         key: 'name',
+        width: 120,
         searchable: true,
       },
       {
         title: '家长称呼',
+        width: 120,
         key: 'parents',
       },
       {
         title: '家长年纪',
         key: 'age',
+        width: 100,
       },
       {
         title: '手机号',
         key: 'tel_phone',
+        width: 120,
         searchable: true,
       },
       {
         title: '客户类型',
         key: 'customer_type',
+        width: 120,
         mappers: member_type,
         renderText: r =>  member_type[r.customer_type] || '-',
       },
       {
         title: '孩子数量',
         key: 'count_member',
+        width: 100,
       },
       {
         title: '沟通次数',
         align: 'center',
         type: 'error',
         key: "",
+        width: 120,
         render: (h, ctx) => 
         <div>
-          <input-number value={+ctx.row.contact_count} editable={false} step={1} onOn-change={(val) => this.changeCount(ctx, val) }></input-number>
+          <input-number value={+ctx.row.contact_count} editable={false} step={1} min={0} onOn-change={(val) => this.changeCount(ctx, val) }></input-number>
         </div>
       },
       {
         title: '创建时间',
         key: 'create_time',
+        width: 150,
         sortable: true
       },
       {
           title: '操作',
           align: 'center',
           type: 'error',
+          fixed: 'right',
           width: 180,
           render: (h, ctx) => 
           <div>
@@ -123,7 +132,6 @@ export default {
     selectChange(selection) {
       this.selectedItems = []
       _.extend(this.selectedItems, selection)
-      console.log('test',this.selectedItems)
     },
     async createCustorm(type, row) {
        let title = type === 0 ? "新建家长" : "编辑家长"
