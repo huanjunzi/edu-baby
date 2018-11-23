@@ -5,95 +5,83 @@
     <div class="section">
        <Row class="title_left">
         <Col span="3">
-        <span><h3 >家长信息</h3></span>
+        <span><h3 >儿童信息</h3></span>
         </Col>
       </Row>
       <Row class="title_left">
-        <Col span="2"><span > 第一联系人 </span></Col>
-        <Col offset="10"><span >  第二联系人 </span></Col>
+          <Col span="2"><span > 儿童姓名: </span></Col>
+          <Col span="8"><span > {{ childInfo.child_name  || '--' }} </span></Col>
+          <Col span="2"><span > 儿童性别: </span></Col>
+          <Col span="8"><span > {{ childInfo.sex ? "男" : "女" || '--' }} </span></Col>
       </Row>
       <Row class="title_left">
-          <Col span="2"><span > 客户姓名: </span></Col>
-          <Col span="8"><span > {{ parentArr.name  || '--' }} </span></Col>
-          <Col span="2"><span > 客户姓名: </span></Col>
-          <Col span="8"><span > {{ parentArr.second_name  || '--' }} </span></Col>
-      </Row>
-      <Row class="title_left">
-        <Col span="2"><span> 客户称谓:</span></Col>
-        <Col span="8"><span> {{ parentArr.parents  || '--' }} </span></Col>
-        <Col span="2"><span> 客户称谓:</span></Col>
-        <Col span="8"><span> {{ parentArr.second_parents  || '--' }} </span></Col>
+        <Col span="2"><span> 儿童年龄:</span></Col>
+        <Col span="8"><span> {{ childInfo.age  || '--' }} </span></Col>
+        <Col span="2"><span> 儿童特点:</span></Col>
+        <Col span="8"><span> {{ childInfo.specialty  || '--' }} </span></Col>
       </Row>
        <Row class="title_left">
-        <Col span="2"><span> 客户年龄:</span></Col>
-        <Col span="8"><span> {{ parentArr.age  || '--' }} </span></Col>
-         <Col span="2"><span> 客户年龄:</span></Col>
-        <Col span="8"><span> {{ parentArr.second_age  || '--' }} </span></Col>
-      </Row>
-      <Row class="title_left">
-        <Col span="2"><span> 客户号码:</span></Col>
-        <Col span="8"><span> {{ parentArr.tel_phone  || '--' }} </span></Col>
-        <Col span="2"><span> 客户号码:</span></Col>
-        <Col span="8"><span> {{ parentArr.second_tel_phone  || '--' }}  </span></Col>
-      </Row>
-      <Row class="title_left">
-        <Col span="2"><span> 客户类型:</span></Col>
-        <Col span="8"><span> {{ memberType = parentArr.customer_type === '0' ? "非潜在客户" : parentArr.customer_type === "1" ? "潜在客户" : "会员"}} </span></Col>
-        <Col span="2"><span> 客户意向:</span></Col>
-        <Col span="8"><span> {{ parentArr.purpose  || '--' }}  </span></Col>
+        <Col span="2"><span> 儿童生日:</span></Col>
+        <Col span="8"><span> {{ childInfo.birthday  || '--' }} </span></Col>
+        <Col span="2"><span> 会员状态:</span></Col>
+        <Col span="8"><span> {{ +childInfo.member_status === 0 ? '非会员' : +childInfo.member_status === 1 ? '会员' : '过期会员'}}  </span></Col>
       </Row>
     </div>
 
+     <!--区块2-->
     <div class="section">
        <Row class="title_left">
         <Col span="3">
-        <span><h3>孩子信息</h3></span>
+        <span><h3 >所属家长信息</h3></span>
         </Col>
       </Row>
       <Row class="title_left">
-        <Col span="2"><span> 孩子数量:</span></Col>
-        <Col span="2">
-          <span style="color:green" v-if="childArr.length > 0"> {{childArr.length}} </span>
-          <span style="color:red" v-else> {{childArr.length}} </span>
-        </Col>
+          <Col span="2"><span > 第一联系人 </span></Col>
+          <Col offset="10"><span > 第二联系人 </span></Col>
       </Row>
-
-      <Row class="title_left" v-for="(item, index) in childArr" :key="">
-        <Col span="6">
-          <span> 孩子姓名:</span>
-          <span class="space"> {{item.child_name}} </span>
-        </Col>
-        <Col span="6">
-          <span> 孩子年纪:</span>
-          <span class="space"> {{item.age}}岁 </span>
-        </Col>
-        <Col span="6">
-          <span> 孩子性别:</span>
-          <span class="space"> {{item.sex === "male" ? "男" : "女"}} </span>
-        </Col>
+       <Row class="title_left">
+        <Col span="2"><span> 家长姓名:</span></Col>
+        <Col span="8"><span> {{ childInfo.name  || '--' }} </span></Col>
+        <Col span="2"><span> 家长姓名:</span></Col>
+        <Col span="8"><span> {{ childInfo.second_name  || '--' }}  </span></Col>
+      </Row>
+      <Row class="title_left">
+        <Col span="2"><span> 家长电话:</span></Col>
+        <Col span="8"><span> {{ childInfo.tel_phone  || '--' }} </span></Col>
+        <Col span="2"><span> 家长电话:</span></Col>
+        <Col span="8"><span> {{ childInfo.second_tel_phone  || '--' }}  </span></Col>
+      </Row>
+       <Row class="title_left">
+        <Col span="2"><span><a @click="routeTo('memberDetail', childInfo.member_id)" style="font-size:10px">查看家长详情</a></span></Col>
       </Row>
     </div>
 
+         <!--区块3-->
     <div class="section">
-      <Row class="title_left">
+       <Row class="title_left">
         <Col span="3">
-        <span><h3 >备注信息</h3></span>
+        <span><h3 >所报课程信息</h3></span>
         </Col>
       </Row>
-      <Row class="title_left">
-          <Col span="2"><span > 添加方式: </span></Col>
-          <Col span="22"><span > {{ +parentArr.social_soft === 0 ? "微信" : +parentArr.social_soft === 1 ? "QQ" : +parentArr.social_soft === 2 ? "其它" : "--" }} </span></Col>
+       <Row class="title_left">
+        <Col span="2"><span> 课程名称:</span></Col>
+        <Col span="8"><span> {{ childInfo.name  || '--' }} </span></Col>
+        <Col span="2"><span> 课程描述:</span></Col>
+        <Col span="8"><span> {{ childInfo.description  || '--' }}  </span></Col>
       </Row>
       <Row class="title_left">
-          <Col span="2"><span > 客户备注: </span></Col>
-          <Col span="22"><span > {{ parentArr.remark  || '--' }} </span></Col>
+        <Col span="2"><span> 课程费用:</span></Col>
+        <Col span="8"><span> {{ childInfo.class_fee  || '--' }} </span></Col>
+        <Col span="2"><span> 成交费用:</span></Col>
+        <Col span="8"><span> {{ childInfo.final_fee  || '--' }} </span></Col>
       </Row>
     </div>
+
 
     <div class="section">
       <Row class="title_left">
         <Col span="4">
-        <span> <Button type="primary" @click="routeTo">返回上一页</Button></span>
+        <span> <Button type="primary" @click="routeTo('child')">返回上一页</Button></span>
         </Col>
       </Row>
     </div>
@@ -109,33 +97,25 @@
       const reg = /^(\d+)(\.\d{1,2})?$/
 
       return {
-        loadingStatus: false,
-        childArr : [
-          // {name: "fdff",age: 11, sex: "男"},
-          // {name: "fdff",age: 11, sex: "男"},
-          // {name: "fdff",age: 11, sex: "男"}
-        ],
-        parentArr: {},
-        memberType: "",
+        childInfo : {},
       }
     },
     async created() {
       if(!_.isEmpty(this.$route.query)){
         let r = await this.$axios({
           method: "get",
-          url: '/api/member/getMemberDetail',
+          url: '/api/child/getChildDetail',
           params: {
-              data: this.$route.query.member_id,
+              data: this.$route.query.child_id,
           }
         })
-        this.childArr = r.data.rows[0].childs
-        this.parentArr = r.data.rows[1].parent[0]
+        this.childInfo = r.data.rows[0]
       }
     },
     methods: {
  
-      routeTo() {
-        this.$router.push({ path: 'child'})
+      routeTo(path, id) {
+        this.$router.push({ path, query: {member_id : id} })
       },
     }
   }

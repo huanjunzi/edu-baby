@@ -128,7 +128,7 @@ export default {
       })
     },
     routeTo(path, id) {
-      this.$router.push({ path, query: { member_id: id } })
+      this.$router.push({ path, query: { child_id: id } })
     },
     selectChange(selection) {
       this.selectedItems = []
@@ -136,7 +136,7 @@ export default {
       console.log('test',this.selectedItems)
     },
     async createCustorm(type, row) {
-       let title = type === 0 ? "新建客户" : "编辑客户"
+       let title = type === 0 ? "新建儿童" : "编辑儿童"
        let r = await showModal(childEdit, { data: row, type: 1 }, { title, width: 'default', styles: {top: '40px'} })
         if(r && r.message === "success") {
           this.$refs.tableList.handleListApproveHistory()

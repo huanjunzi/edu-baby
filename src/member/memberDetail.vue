@@ -5,7 +5,7 @@
     <div class="section">
        <Row class="title_left">
         <Col span="3">
-        <span><h3 >家长信息</h3></span>
+        <span><h3 >客户信息</h3></span>
         </Col>
       </Row>
       <Row class="title_left">
@@ -13,27 +13,27 @@
         <Col offset="10"><span >  第二联系人 </span></Col>
       </Row>
       <Row class="title_left">
-          <Col span="2"><span > 客户姓名: </span></Col>
+          <Col span="2"><span > 家长姓名: </span></Col>
           <Col span="8"><span > {{ parentArr.name  || '--' }} </span></Col>
-          <Col span="2"><span > 客户姓名: </span></Col>
+          <Col span="2"><span > 家长姓名: </span></Col>
           <Col span="8"><span > {{ parentArr.second_name  || '--' }} </span></Col>
       </Row>
       <Row class="title_left">
-        <Col span="2"><span> 客户称谓:</span></Col>
+        <Col span="2"><span> 家长称谓:</span></Col>
         <Col span="8"><span> {{ parentArr.parents  || '--' }} </span></Col>
-        <Col span="2"><span> 客户称谓:</span></Col>
+        <Col span="2"><span> 家长称谓:</span></Col>
         <Col span="8"><span> {{ parentArr.second_parents  || '--' }} </span></Col>
       </Row>
        <Row class="title_left">
-        <Col span="2"><span> 客户年龄:</span></Col>
+        <Col span="2"><span> 家长年龄:</span></Col>
         <Col span="8"><span> {{ parentArr.age  || '--' }} </span></Col>
-         <Col span="2"><span> 客户年龄:</span></Col>
+         <Col span="2"><span> 家长年龄:</span></Col>
         <Col span="8"><span> {{ parentArr.second_age  || '--' }} </span></Col>
       </Row>
       <Row class="title_left">
-        <Col span="2"><span> 客户号码:</span></Col>
+        <Col span="2"><span> 家长号码:</span></Col>
         <Col span="8"><span> {{ parentArr.tel_phone  || '--' }} </span></Col>
-        <Col span="2"><span> 客户号码:</span></Col>
+        <Col span="2"><span> 家长号码:</span></Col>
         <Col span="8"><span> {{ parentArr.second_tel_phone  || '--' }}  </span></Col>
       </Row>
       <Row class="title_left">
@@ -58,7 +58,7 @@
         </Col>
       </Row>
 
-      <Row class="title_left" v-for="(item, index) in childArr" :key="">
+      <Row class="title_left" v-for="(item, index) in childArr" :key="index">
         <Col span="6">
           <span> 孩子姓名:</span>
           <span class="space"> {{item.child_name}} </span>
@@ -67,9 +67,12 @@
           <span> 孩子年纪:</span>
           <span class="space"> {{item.age}}岁 </span>
         </Col>
-        <Col span="6">
+        <Col span="3">
           <span> 孩子性别:</span>
           <span class="space"> {{item.sex === "male" ? "男" : "女"}} </span>
+        </Col>
+        <Col span="6">
+          <span> <a style="font-size:10px" @click="routeTo('childDetail', item.id)">查看详情</a></span>
         </Col>
       </Row>
     </div>
@@ -93,7 +96,7 @@
     <div class="section">
       <Row class="title_left">
         <Col span="4">
-        <span> <Button type="primary" @click="routeTo">返回上一页</Button></span>
+        <span> <Button type="primary" @click="routeTo('member')">返回上一页</Button></span>
         </Col>
       </Row>
     </div>
@@ -142,8 +145,8 @@
     },
     methods: {
  
-      routeTo() {
-        this.$router.push({ path: 'member'})
+      routeTo(path, id) {
+        this.$router.push({ path, query: {child_id: id}})
       },
  
     }

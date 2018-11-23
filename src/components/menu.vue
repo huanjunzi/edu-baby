@@ -35,9 +35,8 @@
     <div class="layout">
         <Sider :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto',width: '250px', minWidth: '250px'}">
           <div class="layout-logo-left">
-            <img src="https://epj-images.oss-cn-shanghai.aliyuncs.com/assets/eglass-logo.png" alt="EGlass"
-            width="150" height="42"/>
-            <div class="text">左侧菜单栏</div>
+            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542961011529&di=4e0bb505a2aee948412d9a30d536cb33&imgtype=jpg&src=http%3A%2F%2Fimg4.imgtn.bdimg.com%2Fit%2Fu%3D2789523474%2C3854943868%26fm%3D214%26gp%3D0.jpg" alt="EGlass"
+            width="200" height="160"/>
         </div>
           <!-- active-name 指的是根据MenuItem name激活的菜单项。 open-names 指的是根据Submenu name展开的菜单项-->
             <Menu :active-name="pathDir" theme="dark" width="auto" :open-names="pathDirArray" :width="'250'" mode="vertical" @on-select="onSelect" ref="child">
@@ -100,16 +99,15 @@ export default {
     pathDir() {
       const path = this.$route.path.slice(1).split('/')
       return this.$route.path.slice(1)
-      // return path.length > 2 ? _.without(path, _.last(path)).join('/') : this.$route.path.slice(1)
     },
     pathDirArray() {
-      let ps = this.currentPath.slice(1).split('/')
-      return [ps[0]]
+    //   let ps = this.currentPath.slice(1).split('/')
+    //   return [ps[0]]
+    return ['menu','class', 'member', 'child']
     },
   },
     watch: {
         $route () {
-            console.log("watch==")
             this.getBreadcrumb()
         },
     },
@@ -120,7 +118,6 @@ export default {
     onSelect(path) {
       console.log("selected", path, this.$route.path)
       this.$router.push('/' + path)
-      // this.currentPath = '/' + path
     },
     logout() {
         this.$Message.info("注销成功")
