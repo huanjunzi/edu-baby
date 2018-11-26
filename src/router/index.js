@@ -36,9 +36,18 @@ export const notFound = {
   component:() => import('../components/404.vue')
 }
 
+export const loveBerry = {
+  path: '/loveberry',
+  name: 'loveberry',
+  meta: {
+    title: 'Guess what this is'
+  },
+  component:() => import('../components/loveberry.vue')
+}
 
 export const routers = [
     loginUser,
     ...menu,
     notFound,
+    loveBerry,
 ]
