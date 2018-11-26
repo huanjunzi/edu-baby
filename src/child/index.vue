@@ -23,14 +23,12 @@ export default {
       selectedItems: [],
       url: '/api/child/findChild',
       downloadURL: '/api/child/downloadChildExcel',
-      
       pagingOption: { 
         showPaging: true,
       },
       params: {
         deleted: ['0']
       },
-      isEdit: true,
       historyColumns: [
       {
         title: '儿童姓名',
@@ -78,10 +76,17 @@ export default {
       {
         title: '最终支付费用',
         key: '',
-        width: 110,
+        width: 200,
         render: (h, ctx) => 
         <div>
-          <input-number id={"fee" + ctx.row.id} value={+ctx.row.final_fee} editable={this.isEdit} min={0} step={1000} onOn-change={(val) => this.changeCount(ctx, val, "fee") }></input-number>
+          <input-number 
+            value={+ctx.row.final_fee} 
+            disabled={ctx.row._locked}
+            min={0} step={1000} 
+            onOn-change={(val) => this.changeCount(ctx, val, "fee") } 
+            style="margin-right:1em;">
+          </input-number>
+          <icon type={ctx.row._locked ? 'locked' : 'unlocked'} on-click={() => this.lockEdit(ctx.row)}></icon>
         </div>
       },
       {
@@ -101,12 +106,12 @@ export default {
           title: '操作',
           align: 'center',
           type: 'error',
-          width: 180,
+          width: 188,
           fixed: 'right',
           render: (h, ctx) => 
           <div>
-            <a on-click={() => this.createCustorm(1, ctx.row)} style="margin-right:10px">编辑</a>
-             {+ctx.row.member_status === 1 ? <poptip trigger="hover" content="设为非会员后即可删除" placement="top-end"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteChild(0, ctx.row)}>删除</a>}
+           {+ctx.row.member_status === 1 ? <poptip trigger="hover" content="设为非会员后即可删除" placement="top-start"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteChild(0, ctx.row)}>删除</a>}
+            <a on-click={() => this.createCustorm(1, ctx.row)} style="margin-left:10px">编辑</a>
             <a on-click={() => this.routeTo('childDetail',ctx.row.id)} style="margin-left:10px">查看</a>
           </div>
       }],
@@ -160,11 +165,7 @@ export default {
     formatRow(row) {
       return {...row, _disabled: _.contains([1], row.member_status)}
     },
-    async changeCount(ctx , val, keyName) {
-      // 获取选中的节点
-      // let currentNode = document.getElementById(keyName + ctx.row.id)
-      // currentNode.style="background-color:red"
-      
+    async changeCount(ctx , val, keyName) {      
        let r = await this.$axios({
           method: "post",
           url: '/api/child/changeClassFee',
@@ -173,6 +174,9 @@ export default {
               count: val
           }
         }).then(res => res.data)
+    },
+    lockEdit(row){
+       row._locked = !row._locked
     }
   }
 }

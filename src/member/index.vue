@@ -38,7 +38,7 @@ export default {
       },
       {
         title: '家长称呼',
-        width: 120,
+        width: 200,
         key: 'parents',
       },
       {
@@ -49,7 +49,7 @@ export default {
       {
         title: '手机号',
         key: 'tel_phone',
-        width: 120,
+        width: 150,
         searchable: true,
       },
       {
@@ -86,11 +86,11 @@ export default {
           align: 'center',
           type: 'error',
           fixed: 'right',
-          width: 180,
+          width: 210,
           render: (h, ctx) => 
           <div>
-            <a on-click={() => this.createCustorm(1, ctx.row)} style="margin-right:10px">编辑</a>
-             {ctx.row.count_member ? <poptip trigger="hover" content="孩子数量为零后即可删除" placement="top-end"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteMember(0, ctx.row)}>删除</a>}
+            {ctx.row.count_member ? <poptip trigger="hover" content="孩子数量为零后即可删除" placement="top-start"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteMember(0, ctx.row)}>删除</a>}
+            <a on-click={() => this.createCustorm(1, ctx.row)} style="margin-left:10px">编辑</a>
             <a on-click={() => this.routeTo('memberDetail',ctx.row.id)} style="margin-left:10px">查看</a>
           </div>
       }],

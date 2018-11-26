@@ -1,26 +1,29 @@
 <template>
-  <div>
-    <h1>{{ msg }}</h1>
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
-      <FormItem prop="name" style="margin-left: 40%; margin-right: auto;">
-        <Input type="text" v-model="formValidate.name" placeholder="Username" style="width:300px">
-        <Icon type="ios-person-outline" slot="prepend"></Icon>
-        </Input>
-      </FormItem>
-      <FormItem prop="pwd" style="margin-left: 40%; margin-right: auto;">
-        <Input type="password" v-model="formValidate.pwd" placeholder="Password" style="width:300px">
-        <Icon type="ios-locked-outline" slot="prepend"></Icon>
-        </Input>
-      </FormItem>
-      <FormItem>
-        <Button type="success" @click="handleSubmit()">登录</Button>
-        <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
-      </FormItem>
-    </Form>
+  <div style="width: 100%; height: 100%;padding-top:20em; background:#FFF url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542969528227&di=573cc591913ee8985593bf49e1953ca0&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farchive%2F604a67f07e41b0cca4054a850fc42759e3a0ed89.jpg) no-repeat 0 0 fixed;">
+    <h1 style="text-align: center; color: white">新爱婴早教中心后台</h1>
+    <Card style="width: 320px; margin:auto; background-color: rgba(0, 0, 0, 0); border-color: rgba(0, 0, 0, 0)">
+      <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
+        <FormItem prop="name">
+          <Input type="text" v-model="formValidate.name" placeholder="Username" style="width:300px">
+          <Icon type="ios-person-outline" slot="prepend"></Icon>
+          </Input>
+        </FormItem>
+        <FormItem prop="pwd">
+          <Input type="password" v-model="formValidate.pwd" placeholder="Password" style="width:300px">
+          <Icon type="ios-locked-outline" slot="prepend"></Icon>
+          </Input>
+        </FormItem>
+        <FormItem>
+          <Button type="success" @click="handleSubmit()">登录</Button>
+          <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
+        </FormItem>
+      </Form>
+    </Card>
   </div>
 </template>
 <script>
 import moment from 'moment'
+
 export default {
   data() {
     const ids = this.$route.query.id
@@ -42,7 +45,7 @@ export default {
       }
     }
   },
-  component: {},
+ component: {},
   // 初始化监听Enter事件
   created() {
     // 这里一定要将this赋值给一个变量
@@ -88,7 +91,6 @@ export default {
           description: this.formValidate.pwd
         }
       }).then(res => res.data)
-      console.log("r===",r)
       if(r.message === 'success') {
         this.$Message.success("登录成功")
         // 登录成功存储登录的session信息
@@ -107,6 +109,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-
-</style>

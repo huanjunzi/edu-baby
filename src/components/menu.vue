@@ -55,14 +55,6 @@
                     <MenuItem name="menu/index/member">家长管理</MenuItem>
                     <MenuItem name="menu/index/child">儿童管理</MenuItem>
                 </Submenu>
-                <Submenu name="3">
-                    <template slot="title">
-                        <Icon type="ios-analytics"></Icon>
-                        Item 3
-                    </template>
-                    <MenuItem name="3-1">Option 1</MenuItem>
-                    <MenuItem name="3-2">Option 2</MenuItem>
-                </Submenu>
             </Menu>
         </Sider>
         <Layout :style="{marginLeft: '250px'}">
@@ -130,9 +122,14 @@ export default {
         this.$route.matched.forEach((item, index) => {
           // 判断父级路由是否为空字符串或者meta是否为首页,直接复写路径到根目录
           // 后面的就是判断路由和当前遍历的项目是否一致,是的话把标题的值给上
-                console.log("item",item)
+            let local = ''
+            console.log("item",item)
+            if(index=== 1){
+                local =  '/menu/index/'+ item.name
+                // console.log('local', local)
+            }
 
-          item.meta.title === '首页' ? item.path = '/menu/index/class' : this.$route.path === item.path ? this.title = item.meta.title : '';
+          item.meta.title === '首页' ? item.path = local : this.$route.path === item.path ? this.title = item.meta.title : '';
         })
     }
   }

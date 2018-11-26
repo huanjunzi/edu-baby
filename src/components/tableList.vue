@@ -2,7 +2,7 @@
     <div>
         <div v-if="timeShow" class="topButton" style=''>
             <DatePicker type="daterange" split-panels placeholder="请选择日期" style="width: 200px"  @on-change="changeTime"></DatePicker>
-            <Button type="primary" @click="exportData" style='margin-left: 10px'><Icon type="ios-download-outline"></Icon>导出表格数据</Button>
+            <Button type="primary" :loading="execlLoading" @click="exportData" style='margin-left: 10px'><Icon type="ios-download-outline"></Icon>导出表格数据</Button>
         </div>
 
       <Table ref="table" :loading="loading" :columns="columns2" :data="historyData" :height='height'></Table>
@@ -23,6 +23,7 @@
 </style>
 <script>
     import _ from 'underscore'
+import { setTimeout } from 'timers';
     export default {
         inject: ['reload'],
         data () {
@@ -37,6 +38,8 @@
                 dataCount:0,
                 // 表格加载
                 loading: false,
+                // execl下载加载
+                execlLoading: false,
                 // filters
                 filterMap: {},
                 // 搜索
@@ -115,7 +118,7 @@
                     renderHeader: c.searchable ? (h, ctx) => // 支持直接搜索
                     <div style="padding: 15px">
                         <span>{c.title}</span>
-                        <i-input style="width:80%;" size="small" placeholder="搜索..." value={this.search[c.key]} class="inlinetop"
+                        <i-input style="width:100%;" size="small" placeholder="搜索..." value={this.search[c.key]} class="inlinetop"
                         onOn-enter={() => this.handleListApproveHistory() }
                         onInput={v => this.search[c.key] = v }
                         ></i-input>
@@ -189,6 +192,10 @@
                 this.handleListApproveHistory()
             },
             exportData () {
+                this.execlLoading = true
+                setTimeout(() => {
+                    this.execlLoading = false
+                },1000)
                 // 由于浏览器传参无法传对象 需要先转换成json字符串 数组则不受影响
                 window.location.href = `${this.downloadURL}?limit=0&offset=0&params=${JSON.stringify(this.params)}&filter=${JSON.stringify(this.filterMap)}&search=${this.searchParams && JSON.stringify(_.object(this.searchParams))}&timeRange=${JSON.stringify(this.timeRange)}&order= order by t1.id +${this.order}`
             },
