@@ -15,6 +15,8 @@ export const menu = [
       { path: 'memberDetail', meta: {title: '家长详情', requiresAuth: true }, name: 'memberDetail', component: resolve => require(['../member/memberDetail.vue'], resolve)},
       { path: 'child', meta: {title: '儿童管理', requiresAuth: true }, name: 'child', component: resolve => require(['../child/index.vue'], resolve) },
       { path: 'childDetail', meta: {title: '儿童详情', requiresAuth: true }, name: 'childDetail', component: resolve => require(['../child/childDetail.vue'], resolve) },
+      { path: 'staff', meta: {title: '员工管理', requiresAuth: true }, name: 'staff', component: resolve => require(['../staff/index.vue'], resolve) },
+      { path: 'staffDetail', meta: {title: '员工详情', requiresAuth: true }, name: 'staffDetail', component: resolve => require(['../staff/staffDetail.vue'], resolve) },
     ]
   },
 ]

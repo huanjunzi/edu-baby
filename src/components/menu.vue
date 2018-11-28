@@ -45,7 +45,7 @@
             <Menu :active-name="pathDir" theme="dark" width="auto" :open-names="pathDirArray" :width="'250'" mode="vertical" @on-select="onSelect" ref="child">
                 <Submenu name="menu">
                     <template slot="title">
-                        <Icon type="ios-navigate"></Icon>
+                        <Icon type="ios-book"></Icon>
                         课程管理
                     </template>
                     <MenuItem name="menu/index/class">课程项目</MenuItem>
@@ -57,6 +57,13 @@
                     </template>
                     <MenuItem name="menu/index/member">家长管理</MenuItem>
                     <MenuItem name="menu/index/child">儿童管理</MenuItem>
+                </Submenu>
+                <Submenu name="staffManage">
+                    <template slot="title">
+                        <Icon type="person-stalker"></Icon>
+                        员工管理
+                    </template>
+                    <MenuItem name="menu/index/staff">员工管理</MenuItem>
                 </Submenu>
             </Menu>
         </Sider>
@@ -98,7 +105,7 @@ export default {
     pathDirArray() {
     //   let ps = this.currentPath.slice(1).split('/')
     //   return [ps[0]]
-    return ['menu','class', 'member', 'child']
+    return ['menu','class', 'member', 'child', 'staffManage']
     },
   },
     watch: {
@@ -126,10 +133,8 @@ export default {
           // 判断父级路由是否为空字符串或者meta是否为首页,直接复写路径到根目录
           // 后面的就是判断路由和当前遍历的项目是否一致,是的话把标题的值给上
             let local = ''
-            console.log("item",item)
             if(index=== 1){
                 local =  '/menu/index/'+ item.name
-                // console.log('local', local)
             }
 
           item.meta.title === '首页' ? item.path = local : this.$route.path === item.path ? this.title = item.meta.title : '';

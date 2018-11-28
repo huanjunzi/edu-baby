@@ -14,7 +14,7 @@
       <FormItem label="家长电话" prop="tel_phone">
         <Input v-model="form.tel_phone" placeholder="请输入家长电话"></Input>
       </FormItem>
-      <a @click="showMore">更多联系人</a>
+      <a @click="showMore">更多联系人 <Icon v-if="!showContact" type="chevron-up"></Icon><Icon v-if="showContact" type="chevron-down"></Icon> </a> 
       <div v-if="showContact">
         <FormItem label="家长姓名" prop="second_name">
           <Input v-model="form.second_name" placeholder="请输入家长姓名"></Input>

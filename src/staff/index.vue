@@ -2,78 +2,88 @@
   <div>
     <Row>
       <Col span="2">
-        <Button style="margin: 0px 0px 15px -10px" type="primary" @click="createCustorm(0)">新建客户</Button>
+        <Button style="margin: 0px 0px 15px -10px" type="primary" @click="createCustorm(0)">新建员工</Button>
       </Col>
       <Col span="2">
-        <Button style="margin: 0px 0px 15px 10px" type="primary" @click="deleteMember(1)">批量删除</Button>
+        <Button style="margin: 0px 0px 15px 10px" type="primary" @click="deleteStaff(1)">批量删除</Button>
       </Col>
     </Row>
-      <table-list ref="tableList" :height="500" :cols="historyColumns" :url="url" :formatRow="formatRow" @on-selection-change="selectChange" :params="params" :downloadURL="downloadURL"></table-list>
+      <table-list ref="tableList" :height="500" :cols="historyColumns" :url="url" :formatRow="formatRow" @on-selection-change="selectChange" :params="params" :timeShow="false"></table-list>
   </div>
 </template>
 <script>
 import _ from 'underscore'
 import {showModal} from '../modals'
 import * as utils from '../utils/utils'
-import memberEdit from './memberEdit'
-import {member_type} from './index.js'
+import staffEdit from './staffEdit'
+import { sex_type, online, job_type } from './index.js'
 export default {
   data () {
     return {
       selectedItems: [],
-      url: '/api/member/findMember',
-      downloadURL: '/api/member/downloadMemberExcel',
-      
+      url: '/api/staff/findStaff',
       pagingOption: { 
         showPaging: true,
       },
       params: {
         deleted: ['0']
       },
-      historyColumns: [{
-        title: '家长姓名',
-        key: 'name',
+      historyColumns: [
+      {
+        title: '员工姓名',
+        key: 'staff_name',
         width: 120,
         searchable: true,
       },
       {
-        title: '家长称呼',
-        width: 200,
-        key: 'parents',
-      },
-      {
-        title: '家长年纪',
-        key: 'age',
+        title: '员工年龄',
+        key: 'staff_age',
         width: 100,
       },
       {
-        title: '手机号',
-        key: 'tel_phone',
-        width: 150,
-        searchable: true,
-      },
-      {
-        title: '客户类型',
-        key: 'customer_type',
-        width: 120,
-        mappers: member_type,
-        renderText: r =>  member_type[r.customer_type] || '-',
-      },
-      {
-        title: '孩子数量',
-        key: 'count_member',
+        title: '员工性别',
+        key: 'staff_sex',
         width: 100,
+        mappers: sex_type,
+        renderText: r =>  sex_type[r.staff_sex] || '-',
       },
       {
-        title: '沟通次数',
-        align: 'center',
-        type: 'error',
-        key: "",
+        title: '员工电话',
+        key: 'staff_tel_phone',
         width: 120,
-        render: (h, ctx) => 
+      },
+      {
+        title: '员工职位',
+        key: 'staff_type',
+        width: 100,
+        mappers: job_type,
+        renderText: r =>  job_type[r.staff_type] || '-',
+      },
+      {
+        title: '员工在职状态',
+        key: 'staff_online',
+        width: 130,
+        mappers: online,
+        renderText: r =>  online[r.staff_online] || '-',
+      },
+      {
+        title: '员工月薪',
+        key: 'staff_salary',
+        width: 100,
+        render: (h, ctx) =>
         <div>
-          <input-number value={+ctx.row.contact_count} editable={false} step={1} min={0} onOn-change={(val) => this.changeCount(ctx, val) }></input-number>
+          {ctx.row.staff_salary + '/月'}
         </div>
+      },
+      {
+        title: '最近工资',
+        key: 'staff_last_salary',
+        width: 100,
+      },
+      {
+        title: '入职时间',
+        key: 'entry_time',
+        width: 100,
       },
       {
         title: '创建时间',
@@ -85,13 +95,13 @@ export default {
           title: '操作',
           align: 'center',
           type: 'error',
+          width: 188,
           fixed: 'right',
-          width: 210,
           render: (h, ctx) => 
           <div>
-            {ctx.row.count_member ? <poptip trigger="hover" content="孩子数量为零后即可删除" placement="top-start"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteMember(0, ctx.row)}>删除</a>}
+           {+ctx.row.staff_online === 0 ? <poptip trigger="hover" content="设为离职后即可删除" placement="top-start"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteStaff(0, ctx.row)}>删除</a>}
             <a on-click={() => this.createCustorm(1, ctx.row)} style="margin-left:10px">编辑</a>
-            <a on-click={() => this.routeTo('memberDetail',ctx.row.id)} style="margin-left:10px">查看</a>
+            <a on-click={() => this.routeTo('staffDetail',ctx.row.id)} style="margin-left:10px">查看</a>
           </div>
       }],
     }
@@ -100,9 +110,9 @@ export default {
   async created(){
   },
   methods: {
-    deleteMember(type, row){
+    deleteStaff(type, row){
       let ids = []
-      let title = "这些客户"
+      let title = "这些员工"
       if (+type === 1) {
         if (!this.selectedItems.length) return this.$Message.error("请先选择项目")
         for(let element of this.selectedItems){
@@ -110,14 +120,14 @@ export default {
         }
       } else {
       ids = [{id : row.id}]
-      title = row.class_name
+      title = row.staff_name
       }
       utils.deletedModal(this,title, async() => {
         let r = await this.$axios({
           method: "post",
-          url: '/api/member/deleteMember',
+          url: '/api/staff/deleteStaff',
           params: {
-              member_id: JSON.stringify(ids),
+              staff_id: JSON.stringify(ids),
           }
         }).then(res => res.data)
         if(r && r.message === "success") {
@@ -127,33 +137,35 @@ export default {
       })
     },
     routeTo(path, id) {
-      this.$router.push({ path, query: { member_id: id } })
+      this.$router.push({ path, query: { staff_id: id } })
     },
     selectChange(selection) {
       this.selectedItems = []
       _.extend(this.selectedItems, selection)
     },
     async createCustorm(type, row) {
-       let title = type === 0 ? "新建家长" : "编辑家长"
-       let r = await showModal(memberEdit, { data: row, type: 1 }, { title, width: 'default', styles: {top: '40px'} })
+       let title = type === 0 ? "新建员工" : "编辑员工"
+       let r = await showModal(staffEdit, { data: row, type: 1 }, { title, width: 'default', styles: {top: '40px'} })
         if(r && r.message === "success") {
           this.$refs.tableList.handleListApproveHistory()
           this.$Message.success("保存成功")
         }
     },
     formatRow(row) {
-      return {...row, _disabled: !_.contains([0], row.count_member)}
+      return {...row, _disabled: _.contains([1], row.member_status)}
     },
-    async changeCount(ctx , val) {
+    async changeCount(ctx , val, keyName) {      
        let r = await this.$axios({
           method: "post",
-          url: '/api/member/changeContactCount',
+          url: '/api/staff/changeClassFee',
           params: {
               id: ctx.row.id,
               count: val
           }
         }).then(res => res.data)
-      
+    },
+    lockEdit(row){
+       row._locked = !row._locked
     }
   }
 }
