@@ -33,6 +33,12 @@
   .ivu-menu.ivu-menu-dark.ivu-menu-vertical{
     position: static; // position默认属性
   }
+  //footer样式
+    .layout-copy{
+        text-align: center;
+        padding: 10px 0 20px;
+        color: #9ea7b4;
+    }
 </style>
 <template>
     <div class="layout">
@@ -82,6 +88,7 @@
                     </div>
                 </Card>
             </Content>
+            <Footer class="layout-copy">2018-2020 &copy; 新爱婴</Footer>
         </Layout>
     </div>
 </template>
