@@ -53,6 +53,12 @@ export default {
         searchable: true,
       },
       {
+        title: '家庭地址',
+        key: '',
+        width: 220,
+        renderText: r => r.province+r.city+r.district+r.address
+      },
+      {
         title: '客户类型',
         key: 'customer_type',
         width: 120,

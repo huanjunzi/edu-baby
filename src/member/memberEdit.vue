@@ -29,6 +29,12 @@
           <Input v-model="form.second_tel_phone" placeholder="请输入家长电话"></Input>
         </FormItem>
       </div>
+      <FormItem label="所在地区：" prop="province">
+        <Cascader :data="storeLocation" v-model="area" @on-change="changeArea" />
+      </FormItem>
+      <FormItem label="详细地址" prop="address">
+        <Input v-model="form.address" placeholder="请输入详细地址"></Input>
+      </FormItem>
       <FormItem label="客户类型" prop="customer_type">
         <Select v-model="form.customer_type">
           <Option v-for="option in memberOptions" :value="option.value" :key="option.value">
@@ -56,6 +62,7 @@
 import _ from 'underscore'
 import {getMapFilters} from '../utils/utils'
 import {member_type, social} from './index.js'
+import storeLocation from '../utils/StoreLocation'
 export default {
   props: ['data', 'type'],
 
@@ -73,11 +80,13 @@ export default {
       purpose: "",
       social_soft: "",
       remark: "",
+      area: [],
     }
     if(this.data){
       form =  Object.assign(form, JSON.parse(JSON.stringify(this.data)))
     }
     return {
+      storeLocation,
       memberOptions: getMapFilters(member_type),
       socialOptions: getMapFilters(social),
       form,
@@ -85,6 +94,7 @@ export default {
       ruleValidate: {
         name: [{ required: true, message: '客户名字不能为空'}],
         parents: [{ required: true, message: '客户称谓不能为空'}],
+        province: [{required: true, message: '所在地区不能为空' }],
         customer_type: [{ required: true, message: '客户类型未选择'}],
         tel_phone: [{required: true, message: '电话格式不正确', pattern: /^1\d{10}$/, }],
         second_tel_phone: [{required: false, message: '电话格式不正确', pattern: /^1\d{10}$/, }],
@@ -92,8 +102,15 @@ export default {
     }
   },
   created() {
+    this.area = [this.form.province, this.form.city, this.form.district]
   },
   methods: {
+    // 选择所在区域
+    changeArea(val) {
+      this.form.province = val[0]
+      this.form.city = val[1]
+      if (val[2]) this.form.district = val[2]
+    },
     // 确定事件
     async onOk(close) {
       let valid = await this.$validForm(this.$refs.form)
@@ -114,19 +131,6 @@ export default {
     showMore(){
       this.showContact = !this.showContact
     }
-    // 单个编辑和多个编辑的数据 统一成数组格式 到后台循环处理
-    // dataEdit() {
-    //   let dataList = []
-    //   if(this.type === '0') {
-    //     dataList = [this.form]
-    //   }
-    //   if(this.type === '1') {
-    //     for(let element of this.form){
-    //       dataList.push({ id: element.id })
-    //     }
-    //   }
-    //   return dataList
-    // }
   }
 }
 </script>

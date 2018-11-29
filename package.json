@@ -5,11 +5,12 @@
   "author": "huanjunzi <hjz@epeijing.cn>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --host 192.168.1.19",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --host 192.168.1.7",
     "start": "npm run dev",
     "build": "node build/build.js"
   },
   "dependencies": {
+    "china-division": "^2.1.1",
     "iview": "^2.14.3",
     "moment": "^2.22.2",
     "underscore": "^1.9.1",

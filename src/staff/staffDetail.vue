@@ -25,8 +25,8 @@
       </Row>
        <Row class="title_left">
         <Col span="3"><span> 员工职位:</span></Col>
-         <!-- { 0: '园长', 1: '教学主管', 2: '幼师', 3: '保育员', 4: '销售', 5: '厨房', 6: '保洁', 7: '其它' } -->
-        <Col span="5"><span> {{ +staffInfo.staff_type === 0 ? '园长' : +staffInfo.staff_type === 1 ? '教学主管' : +staffInfo.staff_type === 2 ? '幼师' : +staffInfo.staff_type === 3 ? '保育员' : +staffInfo.staff_type === 4 ? '销售' : +staffInfo.staff_type === 5 ? '厨房' : +staffInfo.staff_type === 6 ? '保洁' : '其它'}}  </span></Col>
+         <!-- { 0: '园长', 1: '教学主管', 2: '早教老师', 3: '保育员', 4: '销售', 5: '厨房', 6: '保洁', 7: '其它' } -->
+        <Col span="5"><span> {{ +staffInfo.staff_type === 0 ? '园长' : +staffInfo.staff_type === 1 ? '教学主管' : +staffInfo.staff_type === 2 ? '早教老师' : +staffInfo.staff_type === 3 ? '保育员' : +staffInfo.staff_type === 4 ? '销售' : +staffInfo.staff_type === 5 ? '厨房' : +staffInfo.staff_type === 6 ? '保洁' : '其它'}}  </span></Col>
         <Col span="3"><span> 员工在职状态:</span></Col>
         <Col span="5"><span> {{ +staffInfo.staff_online === 0 ? '在职' : '离职'}}  </span></Col>
         <div v-if="+staffInfo.staff_online === 1">
@@ -79,7 +79,7 @@
         },
         historyColumns: [
         {
-          title: '员工月薪',
+          title: '实发月薪',
           key: 'salary',
           width: 100,
           render: (h, ctx) =>

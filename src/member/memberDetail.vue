@@ -42,6 +42,10 @@
         <Col span="2"><span> 客户意向:</span></Col>
         <Col span="8"><span> {{ parentArr.purpose  || '--' }}  </span></Col>
       </Row>
+       <Row class="title_left">
+        <Col span="2"><span> 家庭地址:</span></Col>
+        <Col span="8"><span> {{ parentArr.province + parentArr.city + parentArr.district + parentArr.address  || '--' }}  </span></Col>
+      </Row>
     </div>
 
     <div class="section">
