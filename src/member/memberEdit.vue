@@ -47,7 +47,7 @@
         </Select>
       </FormItem>
       <FormItem label="备注" prop="remark">
-        <Input v-model="form.remark" type="textarea" :autosize="{minRows: 3,maxRows: 6}" placeholder="请输入备注..." style=""></Input>
+        <Input v-model="form.remark" type="textarea" :autosize="{minRows: 3,maxRows: 6}" :maxlength="150" placeholder="请输入备注最多150个字..." style=""></Input>
       </FormItem>
     </Form>
   </div>

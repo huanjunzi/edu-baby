@@ -79,6 +79,10 @@ export default {
         title: '最近工资',
         key: 'staff_last_salary',
         width: 100,
+        render: (h, ctx) =>
+        <div>
+          {ctx.row.staff_last_salary}
+        </div>
       },
       {
         title: '入职时间',

@@ -5,10 +5,12 @@
             <Button type="primary" :loading="execlLoading" @click="exportData" style='margin-left: 10px'><Icon type="ios-download-outline"></Icon>导出表格数据</Button>
         </div>
 
-      <Table ref="table" :loading="loading" :columns="columns2" :data="historyData" :height='height'></Table>
-      <Button type="primary" @click="toLoading" style="margin:11px 0px 0px 483px;">刷新表格
-      </Button>
-      <Page v-if="pagingOption.showPaging" :total="dataCount" :page-size="pageSize" :current="pageNum" show-elevator show-sizer show-total class="paging" @on-change="changepage" @on-page-size-change="handlePageSize"></Page>
+      <Table ref="table" :loading="loading" :columns="columns2" :data="historyData" :height='height' :width='width'></Table>
+      <div class="bottomPage">
+        <Button type="primary" @click="toLoading" style="margin:11px 0px 0px 483px;">刷新表格
+        </Button>
+        <Page v-if="pagingOption.showPaging" :total="dataCount" :page-size="pageSize" :current="pageNum" show-elevator show-sizer show-total class="paging" @on-change="changepage" @on-page-size-change="handlePageSize"></Page>
+      </div>
     </div>
 </template>
 <style scoped>
@@ -54,6 +56,9 @@ import { setTimeout } from 'timers';
             height: {
                 type : Number,
                 default: 500
+            },
+            width: {
+                type : Number,
             },
             // 是否有复选框
             isCheckBox: {
@@ -215,8 +220,8 @@ import { setTimeout } from 'timers';
         }
     }
 </script>
-<style lang="less" scoped>
-    .topButton{
+<style lang="less">
+    .topButton {
         position:relative;top:-10px;left:-34.9%;margin: 10px 0px 15px;
     }
 </style>

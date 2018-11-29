@@ -16,7 +16,7 @@
         <Input v-model="form.age" placeholder="请输入儿童年龄"></Input>
       </FormItem>
       <FormItem label="儿童特点" prop="specialty">
-        <Input v-model="form.specialty"  type="textarea" :autosize="{minRows: 3,maxRows: 6}" placeholder="请输入儿童特点"></Input>
+        <Input v-model="form.specialty"  type="textarea" :autosize="{minRows: 3,maxRows: 6}" placeholder="请输入儿童特点最多150个字..." :maxlength="150"></Input>
       </FormItem>
       <FormItem label="儿童生日" prop="birthday">
         <br />

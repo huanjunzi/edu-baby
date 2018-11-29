@@ -1,6 +1,5 @@
 <template>
-  <div style="">
-
+  <div>
     <!--区块1-->
     <div class="section">
        <Row class="title_left">
@@ -36,8 +35,18 @@
         </div>
       </Row>
     </div>
-    <div calss="section">
-
+    <div class="section">
+    <Row>
+      <Col span="2">
+        <Button style="margin: 0px 0px 20px 0px" type="primary" @click="createCustorm(0)">新建员工</Button>
+      </Col>
+    </Row>
+    <Row>
+      <Col span="10">
+        <span style="color: red">录入顺序请按照工资发放的月份，从先到后依次录入。</span>
+      </Col>
+    </Row>
+      <table-list ref="tableList" :height="320" :width="900" :cols="historyColumns" :url="url" :params="params" :timeShow="false" :isCheckBox="false"></table-list>
     </div>
     <div class="section">
       <Row class="title_left">
@@ -51,14 +60,60 @@
 <script>
 
   import * as _ from 'underscore'
-  import {sex_type} from './index.js'
-  import {getMapFilters} from '../utils/utils'
+  import salaryEdit from './salaryEdit'
+  import {showModal} from '../modals'
+  import * as utils from '../utils/utils'
+
   export default {
     data() {
-      const reg = /^(\d+)(\.\d{1,2})?$/
-
       return {
         staffInfo : {},
+        selectedItems: [],
+        url: '/api/staff/findSalary',
+        pagingOption: {
+          showPaging: true,
+        },
+        params: {
+          staff_id: [this.$route.query.staff_id],
+          deleted: ['0']
+        },
+        historyColumns: [
+        {
+          title: '员工月薪',
+          key: 'salary',
+          width: 100,
+          render: (h, ctx) =>
+          <div>
+            {ctx.row.salary + '/月'}
+          </div>
+        },
+        {
+          title: '薪资发放时间',
+          key: 'salary_time',
+          width: 180,
+          sortable: true,
+        },
+        {
+          title: '备注',
+          key: 'remark',
+          width: 280,
+        },
+        {
+          title: '创建时间',
+          key: 'create_time',
+          width: 150,
+          sortable: true
+        },
+        {
+            title: '操作',
+            align: 'center',
+            type: 'error',
+            render: (h, ctx) => 
+            <div>
+              <a on-click={() => this.deleteSalary(0, ctx.row)}>删除</a>
+              <a on-click={() => this.createCustorm(1, ctx.row)} style="margin-left:10px">编辑</a>
+            </div>
+        }],
       }
     },
     async created() {
@@ -78,6 +133,42 @@
       routeTo(path) {
         this.$router.push({ path, query: {} })
       },
+      async createCustorm(type, row) {
+       let title = type === 0 ? "新建工资条" : "编辑工资条"
+       type === 0 ? row = {staff_id : this.$route.query.staff_id } : row
+       let r = await showModal(salaryEdit, { data: row, type: 1 }, { title, width: 'default', styles: {top: '40px'} })
+        if(r && r.message === "success") {
+          this.$refs.tableList.handleListApproveHistory()
+          this.$Message.success("保存成功")
+        }
+      },
+      deleteSalary(type, row){
+      let ids = []
+      let title = "这些工资条"
+      if (+type === 1) {
+        if (!this.selectedItems.length) return this.$Message.error("请先选择项目")
+        for(let element of this.selectedItems){
+          ids.push({ id: element.id })
+        }
+      } else {
+      ids = [{id : row.id}]
+      title = row.salary
+      }
+      utils.deletedModal(this,title, async() => {
+        let r = await this.$axios({
+          method: "post",
+          url: '/api/staff/deleteSalary',
+          params: {
+              id: JSON.stringify(ids),
+              staff_id: row.staff_id
+          }
+        }).then(res => res.data)
+        if(r && r.message === "success") {
+          this.$refs.tableList.handleListApproveHistory()
+          this.$Message.success("删除成功")
+        }
+      })
+    },
     }
   }
 </script>
@@ -92,7 +183,7 @@
     border-bottom: 1px solid #e4e4e4;
   }
 
-  .title_left{
+  .title_left {
     margin: 1em 1em 1em 2em;
   h3 {
     margin-bottom: 1em;margin-left: -1.0em;

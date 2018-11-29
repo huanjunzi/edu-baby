@@ -20,11 +20,11 @@
 
       <FormItem label="课程描述">
       <Row>
-        <Col span="12" style="text-align:right">{{formData.class_description.length}}/100</Col>
+        <Col span="12" style="text-align:right">{{formData.class_description.length}}/150</Col>
       </Row>
       <Row>
         <Col span="12">
-            <Input v-model="formData.class_description" type="textarea" :autosize="{minRows: 3}" :maxlength="100" placeholder="请输入课程描述..."></Input>
+            <Input v-model="formData.class_description" type="textarea" :autosize="{minRows: 3}" :maxlength="150" placeholder="请输入课程描述最多150个字..."></Input>
         </Col>
       </Row>
     </FormItem>
