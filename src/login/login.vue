@@ -96,6 +96,7 @@ export default {
         // 登录成功存储登录的session信息
         sessionStorage.setItem('accessToken' , moment().format("YYYY-MM-DD hh:mm:ss"))
         sessionStorage.setItem("username", r.rows[0].username)
+        sessionStorage.setItem("type", r.rows[0].type)
         this.toWhere('/menu/index/class')
       }
       if(r.message === 'failed') {

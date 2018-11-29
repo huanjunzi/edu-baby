@@ -64,7 +64,7 @@
                     <MenuItem name="menu/index/member">家长管理</MenuItem>
                     <MenuItem name="menu/index/child">儿童管理</MenuItem>
                 </Submenu>
-                <Submenu name="staffManage">
+                <Submenu name="staffManage" v-if="userType==='admin'">
                     <template slot="title">
                         <Icon type="person-stalker"></Icon>
                         员工管理
@@ -97,10 +97,12 @@ import _ from 'underscore'
 export default {
   data() {
      let name = sessionStorage.getItem("username")
+     let userType = sessionStorage.getItem("type")
     return {
         title: '',  // 页面标题
         brumblist: '', // 路由集合
         name,
+        userType,
         currentPath: window.location.pathname,
     }
   },
