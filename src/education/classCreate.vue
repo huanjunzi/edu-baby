@@ -102,7 +102,7 @@
 
       },
       cancel() {
-        this.$router.push({ path: 'class'})
+        this.$router.go(-1)
       },
  
     }

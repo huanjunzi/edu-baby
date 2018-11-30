@@ -123,7 +123,7 @@ export default {
     pathDirArray() {
     //   let ps = this.currentPath.slice(1).split('/')
     //   return [ps[0]]
-    return ['menu','class', 'member', 'child', 'staffManage']
+        return ['menu','class', 'member', 'child', 'staffManage']
     },
   },
     watch: {

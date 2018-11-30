@@ -117,7 +117,8 @@
         this.$router.go(-1)
       },
       routeTo(path, id) {
-        this.$router.push({ path, query: {member_id : id} })
+        this.$router.push({ name: path, query: {member_id : id} })
+        // this.$router.push({ path, query: {member_id : id} })
       },
     }
   }

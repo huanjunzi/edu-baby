@@ -149,10 +149,11 @@
     },
     methods: {
       goBack() {
-      this.$router.go(-1)
+        this.$router.go(-1)
       },
       routeTo(path, id) {
-        this.$router.push({ path, query: {child_id: id}})
+        this.$router.push({ name: path, query: {child_id: id} })
+        // this.$router.push({ path, query: {child_id: id}})
       },
  
     }

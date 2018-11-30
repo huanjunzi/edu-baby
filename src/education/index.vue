@@ -2,7 +2,7 @@
   <div class="eduClass">
     <div>
       <Button style="position:relative;top: -10px;left: -37.2%;
-" type="primary" @click="routeTo('class_create')" >新建课程
+" type="primary" @click="routeTo('class/class_create')" >新建课程
       </Button>
             <Button style="position:relative;top: -10px;left: -36.4%;
     " type="primary" @click="editClass('1')" >批量编辑价格
@@ -67,7 +67,6 @@ export default {
           title: '选择该课程的人数',
           key: '',
           renderText: r => r.count || 0,
-          sortable: true,
         },
         {
           title: '创建时间',
@@ -81,7 +80,7 @@ export default {
             width: 180,
             render: (h, ctx) => 
             <div>
-              <a on-click={() => this.createClass("class_create", ctx.row)} style="margin-right:10px">编辑</a>
+              <a on-click={() => this.createClass("class/class_create", ctx.row)} style="margin-right:10px">编辑</a>
               <a on-click={() => this.editClass('0', ctx.row)} style="margin-right:10px">编辑价格</a>
               {ctx.row.count_class ? <poptip trigger="hover" content="该课程无人选择后即可删除" placement="top-end"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteClass(0, ctx.row)}>删除</a>}
             </div>
