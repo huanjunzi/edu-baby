@@ -38,7 +38,7 @@
     <div class="section">
     <Row>
       <Col span="2">
-        <Button style="margin: 0px 0px 20px 0px" type="primary" @click="createCustorm(0)">新建员工</Button>
+        <Button style="margin: 0px 0px 20px 0px" type="primary" @click="createCustorm(0)">新建工资条</Button>
       </Col>
     </Row>
     <Row>

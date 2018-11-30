@@ -25,7 +25,8 @@ const router = new VueRouter(routeConfig)
 // 每次路由跳转到的时候都会调用该函数
 router.beforeEach((to, from, next) => { //beforeEach是router的钩子函数，在进入路由前执行
   // to即将进入的目标路由对象， from当前导航正要离开的路由，next下一步执行的函数钩子
-
+  // console.log("to", to)
+  // console.log("from", from)
   /* 路由发生变化修改页面title */
   if (to.meta.title) {
     document.title = to.meta.title
@@ -47,7 +48,9 @@ router.beforeEach((to, from, next) => { //beforeEach是router的钩子函数，�
       to.meta.userType = sessionStorage.getItem('type')
       if(to.path === '/menu/index/staff' || to.path === '/menu/index/staffDetail'){
         if(to.meta.userType!== 'admin'){
-          next({ path: '/login' })
+          alert('没有员工管理页面的操作权限！')
+          // 返回上一页
+          window.history.go(-1)
         }
       }
       next()

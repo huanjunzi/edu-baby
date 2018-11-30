@@ -156,7 +156,7 @@ export default {
         }
     },
     formatRow(row) {
-      return {...row, _disabled: _.contains([1], row.member_status)}
+      return {...row, _disabled: _.contains([0], +row.staff_online)}
     },
     async changeCount(ctx , val, keyName) {      
        let r = await this.$axios({

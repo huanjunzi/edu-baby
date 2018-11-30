@@ -36,6 +36,7 @@
           </Option>
         </Select>
       </FormItem>
+      <div v-if="showMember&&showMessage" style="color:red;padding-top:10px;">当前是会员,切换课程会修改课程最终支付费用</div>
       <FormItem label="会员类型" prop="member_status">
         <Select v-model="form.member_status">
           <Option v-for="option in childOptions" :value="option.value" :key="option.value">
@@ -77,6 +78,9 @@ export default {
       prarentsOptions: [],
       classOptions: [],
       form,
+      showMember: false,
+      showMessage: false,
+      classStatus: 0,
       ruleValidate: {
         child_name: [{ required: true, message: '儿童名字不能为空'}],
         sex: [{ required: true, message: '儿童性别不能为空'}],
@@ -87,7 +91,27 @@ export default {
     }
   },
   created() {
+    this.showMember =  +this.form.member_status === 1 ? true : false 
+    this.classStatus = +this.form.class_id
     this.findInfo()
+  },
+  // 监听是否在职
+  watch:{
+    'form.member_status': function (newVal) {
+      if(+newVal === 1) {
+        this.showMember = true
+      } else {
+        this.showMember = false
+      }
+    },
+     'form.class_id': function (newVal) {
+      if(+newVal !== +this.classStatus) {
+        this.showMessage = true
+      }
+      else {
+        this.showMessage = false
+      }
+    },
   },
   methods: {
     async findInfo() {
