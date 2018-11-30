@@ -81,7 +81,7 @@
     <div class="section">
       <Row class="title_left">
         <Col span="4">
-        <span> <Button type="primary" @click="routeTo('child')">返回上一页</Button></span>
+        <span> <Button type="primary" @click="goBack">返回上一页</Button></span>
         </Col>
       </Row>
     </div>
@@ -113,7 +113,9 @@
       }
     },
     methods: {
- 
+      goBack() {
+        this.$router.go(-1)
+      },
       routeTo(path, id) {
         this.$router.push({ path, query: {member_id : id} })
       },

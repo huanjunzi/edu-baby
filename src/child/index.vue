@@ -112,7 +112,7 @@ export default {
           <div>
            {+ctx.row.member_status === 1 ? <poptip trigger="hover" content="设为非会员后即可删除" placement="top-start"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteChild(0, ctx.row)}>删除</a>}
             <a on-click={() => this.createCustorm(1, ctx.row)} style="margin-left:10px">编辑</a>
-            <a on-click={() => this.routeTo('childDetail',ctx.row.id)} style="margin-left:10px">查看</a>
+            <a on-click={() => this.routeTo('child/childDetail',ctx.row.id)} style="margin-left:10px">查看</a>
           </div>
       }],
     }

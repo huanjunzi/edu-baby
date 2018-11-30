@@ -105,7 +105,7 @@ export default {
           <div>
            {+ctx.row.staff_online === 0 ? <poptip trigger="hover" content="设为离职后即可删除" placement="top-start"><a disabled>删除</a></poptip> : <a on-click={() => this.deleteStaff(0, ctx.row)}>删除</a>}
             <a on-click={() => this.createCustorm(1, ctx.row)} style="margin-left:10px">编辑</a>
-            <a on-click={() => this.routeTo('staffDetail',ctx.row.id)} style="margin-left:10px">查看</a>
+            <a on-click={() => this.routeTo('staff/staffDetail',ctx.row.id)} style="margin-left:10px">查看</a>
           </div>
       }],
     }

@@ -108,8 +108,17 @@ export default {
   },
   computed: {
     pathDir() {
-      const path = this.$route.path.slice(1).split('/')
-      return this.$route.path.slice(1)
+    //   const path = this.$route.path.slice(1).split('/')
+    //   return this.$route.path.slice(1)
+        const path = this.$route.path.slice(1).split('/')
+        if(path.length > 3 ){
+            return _.without(path, _.last(path)).join('/')
+    //   console.log("_.without(path, _.last(path)).join('/')=", _.without(path, _.last(path)).join('/'))
+        } else { 
+          return this.$route.path.slice(1)
+        //   console.log("this.$route.path.slice(1)",this.$route.path.slice(1))
+        }
+      
     },
     pathDirArray() {
     //   let ps = this.currentPath.slice(1).split('/')

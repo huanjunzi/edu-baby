@@ -12,11 +12,11 @@ export const menu = [
       { path: 'class', meta: {title: '课程项目', requiresAuth: true }, name: 'class', component: resolve => require(['../education/index.vue'], resolve) },
       { path: 'class_create', meta: {title: '新建课程项目', requiresAuth: true }, name: 'class_create', component: resolve => require(['../education/classCreate.vue'], resolve) },
       { path: 'member', meta: {title: '家长管理', requiresAuth: true }, name: 'member', component: resolve => require(['../member/index.vue'], resolve) },
-      { path: 'memberDetail', meta: {title: '家长详情', requiresAuth: true }, name: 'memberDetail', component: resolve => require(['../member/memberDetail.vue'], resolve)},
+      { path: 'member/memberDetail', meta: {title: '家长详情', requiresAuth: true }, name: 'memberDetail', component: resolve => require(['../member/memberDetail.vue'], resolve)},
       { path: 'child', meta: {title: '儿童管理', requiresAuth: true }, name: 'child', component: resolve => require(['../child/index.vue'], resolve) },
-      { path: 'childDetail', meta: {title: '儿童详情', requiresAuth: true }, name: 'childDetail', component: resolve => require(['../child/childDetail.vue'], resolve) },
+      { path: 'child/childDetail', meta: {title: '儿童详情', requiresAuth: true }, name: 'childDetail', component: resolve => require(['../child/childDetail.vue'], resolve) },
       { path: 'staff', meta: {title: '员工管理', requiresAuth: true }, name: 'staff', component: resolve => require(['../staff/index.vue'], resolve) },
-      { path: 'staffDetail', meta: {title: '员工详情', requiresAuth: true }, name: 'staffDetail', component: resolve => require(['../staff/staffDetail.vue'], resolve) },
+      { path: 'staff/staffDetail', meta: {title: '员工详情', requiresAuth: true }, name: 'staffDetail', component: resolve => require(['../staff/staffDetail.vue'], resolve) },
     ]
   },
 ]
