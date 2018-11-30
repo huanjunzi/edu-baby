@@ -60,13 +60,19 @@ export default {
             // }
         },
         {
-            title: '课程描述',
-            key: 'class_description'
+          title: '课程描述',
+          key: 'class_description'
         },
         {
-            title: '创建时间',
-            key: 'create_time',
-            sortable: true,
+          title: '选择该课程的人数',
+          key: '',
+          renderText: r => r.count || 0,
+          sortable: true,
+        },
+        {
+          title: '创建时间',
+          key: 'create_time',
+          sortable: true,
         },
         {
             title: '操作',
@@ -96,9 +102,9 @@ export default {
     },
     // 0代表单个编辑 1代表批量编辑
     async editClass(type, row) {
-      let title = "单个编辑"
+      let title = "单个编辑价格"
       if (type === '1') {
-          title = "批量编辑"
+          title = "批量编辑价格"
           if (!this.selectedItems.length) return this.$Message.error("请先选择项目")
       }
       let data

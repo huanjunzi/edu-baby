@@ -2,8 +2,9 @@
   <div>
     <Form ref="form" :model="form" :rules="ruleValidate">
       <FormItem prop="class_fee" style="">
-          <InputNumber :min="0.00" v-model="form.class_fee" :step='1000' ></InputNumber>
+          <InputNumber :min="0.00" v-model="form.class_fee" :step='1000'></InputNumber>
       </FormItem>
+      <div v-if="showMessage" style="color:red;margin-top:-15px;">修改课程价格不会影响到修改之前已选择该课程用户的最终支付价格</div>
     </Form>
   </div>
 </template>
@@ -17,12 +18,14 @@ export default {
     return {
       form,
       imgUrl: '',
+      showMessage: false,
       ruleValidate: {
           class_fee: [{required: true, message: '只能填写到小数点后两位', pattern: reg, }],
       }
     }
   },
   created() {
+    this.showMessage = this.form.count > 0 ? true : false
   },
   methods: {
     // 确定事件

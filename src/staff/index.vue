@@ -32,7 +32,7 @@ export default {
       {
         title: '员工姓名',
         key: 'staff_name',
-        width: 120,
+        width: 150,
         searchable: true,
       },
       {

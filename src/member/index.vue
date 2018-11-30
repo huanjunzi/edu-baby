@@ -33,7 +33,7 @@ export default {
       historyColumns: [{
         title: '家长姓名',
         key: 'name',
-        width: 120,
+        width: 150,
         searchable: true,
       },
       {

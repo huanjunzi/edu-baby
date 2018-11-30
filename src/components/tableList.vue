@@ -170,11 +170,13 @@ import { setTimeout } from 'timers';
                 let res = await this.pageSend('get',this.url, 0, 0)
                 this.historyData = this.historyData ? this.historyData.slice(0, this.pageSize) : []
                 this.dataCount = res.rows ? res.rows.length : 0
+                this.pageNum = 1
             },
             async changepage(index){
                 var _start = ( index - 1 ) * this.pageSize;
                 var _end = this.pageSize;
                 let res = await this.pageSend('get', this.url, _start, _end)
+                this.pageNum = index
                 // this.historyData = res.rows ? res.rows.slice(0, this.pageSize) : []
             },
             async handlePageSize(index){
