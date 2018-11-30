@@ -105,7 +105,8 @@ export default {
       }
     },
      'form.class_id': function (newVal) {
-      if(+newVal !== +this.classStatus) {
+      if(+this.classStatus!== 0 && +newVal !== +this.classStatus) {
+        // console.log("+this.classStatus=", +this.classStatus)
         this.showMessage = true
       }
       else {
