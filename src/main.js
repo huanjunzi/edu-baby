@@ -43,6 +43,13 @@ router.beforeEach((to, from, next) => { //beforeEach是router的钩子函数，�
     if(to.meta.requiresAuth && !sessionStorage.getItem('accessToken')) {
       next({ path: '/login' })
     } else {
+      // 登录成功后 给meta赋予一个权限判断值
+      to.meta.userType = sessionStorage.getItem('type')
+      if(to.path === '/menu/index/staff' || to.path === '/menu/index/staffDetail'){
+        if(to.meta.userType!== 'admin'){
+          next({ path: '/login' })
+        }
+      }
       next()
     }
   }
