@@ -36,7 +36,7 @@
           </Option>
         </Select>
       </FormItem>
-      <div v-if="showMember&&showMessage" style="color:red;padding-top:10px;">当前是会员,切换课程会修改课程最终支付费用</div>
+      <div v-if="showMember&&showMessage" style="color:red;margin-top:-15px;">当前是会员,切换课程会修改课程最终支付费用</div>
       <FormItem label="会员类型" prop="member_status">
         <Select v-model="form.member_status">
           <Option v-for="option in childOptions" :value="option.value" :key="option.value">

@@ -81,7 +81,7 @@
         {
           title: '实发月薪',
           key: 'salary',
-          width: 100,
+          width: 180,
           render: (h, ctx) =>
           <div>
             {ctx.row.salary + '/月'}
@@ -90,7 +90,7 @@
         {
           title: '薪资发放时间',
           key: 'salary_time',
-          width: 180,
+          width: 130,
           sortable: true,
         },
         {
